@@ -29,9 +29,7 @@ class Direction(TimestampedModel):
         'Kalit (slug)', max_length=64, unique=True,
         help_text="URL slug. Masalan: theater_circus, education, cinema, ..."
     )
-    name_uz_latn = models.CharField('Nomi (lotin)', max_length=200)
-    name_uz_cyrl = models.CharField('Nomi (krill)', max_length=200)
-    name_ru = models.CharField('Название (рус)', max_length=200)
+    name = models.CharField('Nomi', max_length=200)
     icon = models.CharField(
         'Ikon nomi', max_length=50, blank=True,
         help_text='Frontend DirectionIcon kalit: theater, education, heritage, cinema, concert'
@@ -44,7 +42,7 @@ class Direction(TimestampedModel):
         ordering = ['order', 'key']
 
     def __str__(self):
-        return self.name_uz_latn
+        return self.name
 
 
 # ── Mukofotlar iyerarxiyasi ───────────────────────────────────────────────
@@ -56,9 +54,7 @@ class AwardAffiliation(TimestampedModel):
     """
 
     key = models.SlugField('Kalit (slug)', max_length=64, unique=True)
-    name_uz_latn = models.CharField('Nomi (lotin)', max_length=200)
-    name_uz_cyrl = models.CharField('Nomi (krill)', max_length=200)
-    name_ru = models.CharField('Название (рус)', max_length=200)
+    name = models.CharField('Nomi', max_length=200)
     order = models.PositiveIntegerField('Tartib', default=0)
 
     class Meta:
@@ -67,7 +63,7 @@ class AwardAffiliation(TimestampedModel):
         ordering = ['order', 'key']
 
     def __str__(self):
-        return self.name_uz_latn
+        return self.name
 
 
 class AwardType(TimestampedModel):
@@ -78,9 +74,7 @@ class AwardType(TimestampedModel):
         verbose_name='Mansubligi'
     )
     key = models.SlugField('Kalit (slug)', max_length=64)
-    name_uz_latn = models.CharField('Nomi (lotin)', max_length=200)
-    name_uz_cyrl = models.CharField('Nomi (krill)', max_length=200)
-    name_ru = models.CharField('Название (рус)', max_length=200)
+    name = models.CharField('Nomi', max_length=200)
     order = models.PositiveIntegerField('Tartib', default=0)
 
     class Meta:
@@ -94,7 +88,7 @@ class AwardType(TimestampedModel):
         ]
 
     def __str__(self):
-        return f'{self.affiliation.name_uz_latn} → {self.name_uz_latn}'
+        return f'{self.affiliation.name} → {self.name}'
 
 
 class AwardName(TimestampedModel):
@@ -105,9 +99,7 @@ class AwardName(TimestampedModel):
         verbose_name='Turi'
     )
     key = models.SlugField('Kalit (slug)', max_length=128)
-    name_uz_latn = models.CharField('Nomi (lotin)', max_length=300)
-    name_uz_cyrl = models.CharField('Nomi (krill)', max_length=300)
-    name_ru = models.CharField('Название (рус)', max_length=300)
+    name = models.CharField('Nomi', max_length=300)
     order = models.PositiveIntegerField('Tartib', default=0)
 
     class Meta:
@@ -121,7 +113,7 @@ class AwardName(TimestampedModel):
         ]
 
     def __str__(self):
-        return self.name_uz_latn
+        return self.name
 
     @property
     def affiliation(self):

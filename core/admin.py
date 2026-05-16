@@ -6,6 +6,7 @@ from django.db.models import CharField as DjangoCharField
 from django.db.models import TextField as DjangoTextField
 from django.forms import Select, Textarea, TextInput
 from django.utils.html import format_html
+from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
 
 from .models import (
     AwardAffiliation,
@@ -34,7 +35,7 @@ class LanguageAdmin(admin.ModelAdmin):
 # ── Yo'nalishlar ──────────────────────────────────────────────────────────
 
 @admin.register(Direction)
-class DirectionAdmin(admin.ModelAdmin):
+class DirectionAdmin(TabbedTranslationAdmin):
     list_display = ('order', 'key', 'name_uz_latn', 'name_uz_cyrl', 'name_ru', 'icon',
                     'representatives_count')
     list_display_links = ('key', 'name_uz_latn')
@@ -50,7 +51,7 @@ class DirectionAdmin(admin.ModelAdmin):
 
 # ── Mukofotlar ────────────────────────────────────────────────────────────
 
-class AwardTypeInline(admin.TabularInline):
+class AwardTypeInline(TranslationTabularInline):
     model = AwardType
     extra = 0
     fields = ('order', 'key', 'name_uz_latn', 'name_uz_cyrl', 'name_ru')
@@ -59,7 +60,7 @@ class AwardTypeInline(admin.TabularInline):
 
 
 @admin.register(AwardAffiliation)
-class AwardAffiliationAdmin(admin.ModelAdmin):
+class AwardAffiliationAdmin(TabbedTranslationAdmin):
     list_display = ('order', 'key', 'name_uz_latn', 'name_uz_cyrl', 'name_ru',
                     'types_count')
     list_display_links = ('key', 'name_uz_latn')
@@ -74,7 +75,7 @@ class AwardAffiliationAdmin(admin.ModelAdmin):
         return obj.types.count()
 
 
-class AwardNameInline(admin.TabularInline):
+class AwardNameInline(TranslationTabularInline):
     model = AwardName
     extra = 0
     fields = ('order', 'key', 'name_uz_latn', 'name_uz_cyrl', 'name_ru')
@@ -83,7 +84,7 @@ class AwardNameInline(admin.TabularInline):
 
 
 @admin.register(AwardType)
-class AwardTypeAdmin(admin.ModelAdmin):
+class AwardTypeAdmin(TabbedTranslationAdmin):
     list_display = ('affiliation', 'order', 'key', 'name_uz_latn', 'names_count')
     list_display_links = ('key', 'name_uz_latn')
     list_editable = ('order',)
@@ -100,7 +101,7 @@ class AwardTypeAdmin(admin.ModelAdmin):
 
 
 @admin.register(AwardName)
-class AwardNameAdmin(admin.ModelAdmin):
+class AwardNameAdmin(TabbedTranslationAdmin):
     list_display = ('order', 'key', 'name_uz_latn', 'type', 'affiliation_display')
     list_display_links = ('key', 'name_uz_latn')
     list_editable = ('order',)
@@ -117,7 +118,7 @@ class AwardNameAdmin(admin.ModelAdmin):
 
 # ── Vakillar ──────────────────────────────────────────────────────────────
 
-class FamilyMemberInline(admin.TabularInline):
+class FamilyMemberInline(TranslationTabularInline):
     model = FamilyMember
     extra = 1
     fields = ('order', 'relation', 'name', 'info', 'note')
@@ -143,7 +144,7 @@ class RepresentativeAwardInline(admin.TabularInline):
 
 
 @admin.register(Representative)
-class RepresentativeAdmin(admin.ModelAdmin):
+class RepresentativeAdmin(TabbedTranslationAdmin):
     # ── Ro'yxat ko'rinishi ────────────────────────────────────────────────
     list_display = (
         'photo_thumb',

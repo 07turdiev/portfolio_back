@@ -63,6 +63,7 @@ class Command(BaseCommand):
                 defaults={
                     'icon': d['icon'],
                     'order': d['order'],
+                    'name': d['uz_latn'],
                     'name_uz_latn': d['uz_latn'],
                     'name_uz_cyrl': d['uz_cyrl'],
                     'name_ru': d['ru'],

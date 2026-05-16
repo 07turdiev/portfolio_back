@@ -7,16 +7,21 @@ from core.models import Representative
 router = APIRouter(prefix='/api', tags=['representatives'])
 
 
+def _i18n(obj, field: str) -> dict:
+    """Bitta tarjima qilinadigan maydonni 3 tilli dict ga aylantirish."""
+    return {
+        'uz_latn': getattr(obj, f'{field}_uz_latn', '') or '',
+        'uz_cyrl': getattr(obj, f'{field}_uz_cyrl', '') or '',
+        'ru': getattr(obj, f'{field}_ru', '') or '',
+    }
+
+
 def _serialize(rep: Representative) -> dict:
     awards = [
         {
             'year': ra.year,
             'key': ra.award.key,
-            'name': {
-                'uz_latn': ra.award.name_uz_latn,
-                'uz_cyrl': ra.award.name_uz_cyrl,
-                'ru': ra.award.name_ru,
-            },
+            'name': _i18n(ra.award, 'name'),
             'type_key': ra.award.type.key,
             'affiliation_key': ra.award.type.affiliation.key,
         }
@@ -27,11 +32,15 @@ def _serialize(rep: Representative) -> dict:
     family = [
         {
             'relation': m.relation,
-            'name': m.name,
-            'info': m.info,
-            'note': m.note,
+            'name': _i18n(m, 'name'),
+            'info': _i18n(m, 'info'),
+            'note': _i18n(m, 'note'),
         }
         for m in rep.family_members.order_by('order', 'id')
+    ]
+    languages = [
+        {'code': lang.code, 'name': lang.name}
+        for lang in rep.languages.all().order_by('order', 'name')
     ]
     return {
         'id': rep.id,
@@ -42,37 +51,39 @@ def _serialize(rep: Representative) -> dict:
         'fullName': rep.full_name,
         'gender': rep.gender,
         'nationality': rep.nationality,
+        'nationalityDisplay': rep.get_nationality_display() if rep.nationality else '',
         'birthDate': rep.birth_date.isoformat() if rep.birth_date else None,
-        'birthPlace': rep.birth_place,
-        'residencePlace': rep.residence_place,
+        'birthPlace': _i18n(rep, 'birth_place'),
+        'residencePlace': _i18n(rep, 'residence_place'),
         'photo': rep.photo.url if rep.photo else None,
         # Family
-        'maritalStatus': rep.marital_status,
+        'maritalStatus': _i18n(rep, 'marital_status'),
         'family': family,
         # Education
         'education': {
-            'university': rep.university,
-            'specialty': rep.specialty,
-            'academicDegree': rep.academic_degree,
-            'languages': rep.languages,
-            'training': rep.training,
+            'university': _i18n(rep, 'university'),
+            'specialty': _i18n(rep, 'specialty'),
+            'academicDegree': _i18n(rep, 'academic_degree'),
+            'languages': languages,
+            'training': _i18n(rep, 'training'),
         },
         # Work
         'work': {
-            'position': rep.position,
-            'careerLevel': rep.career_level,
-            'totalExperience': rep.total_experience,
-            'leadershipExperience': rep.leadership_experience,
-            'leadershipPositions': rep.leadership_positions,
+            'position': _i18n(rep, 'position'),
+            'careerLevel': _i18n(rep, 'career_level'),
+            'totalExperience': _i18n(rep, 'total_experience'),
+            'leadershipExperience': _i18n(rep, 'leadership_experience'),
+            'leadershipPositions': _i18n(rep, 'leadership_positions'),
             'health': rep.health,
-            'lastMedicalTreatment': rep.last_medical_treatment,
-            'medicalCheckup': rep.medical_checkup,
-            'healthProblems': rep.health_problems,
+            'healthDisplay': rep.get_health_display() if rep.health else '',
+            'lastMedicalTreatment': _i18n(rep, 'last_medical_treatment'),
+            'medicalCheckup': _i18n(rep, 'medical_checkup'),
+            'healthProblems': _i18n(rep, 'health_problems'),
         },
         # Activity
         'activity': {
-            'description': rep.description,
-            'stateEvents': rep.state_events,
+            'description': _i18n(rep, 'description'),
+            'stateEvents': _i18n(rep, 'state_events'),
         },
         'awards': awards,
     }

@@ -342,6 +342,7 @@ class Command(BaseCommand):
                 key=aff['key'],
                 defaults={
                     'order': aff['order'],
+                    'name': aff['uz_latn'],
                     'name_uz_latn': aff['uz_latn'],
                     'name_uz_cyrl': aff['uz_cyrl'],
                     'name_ru': aff['ru'],
@@ -360,6 +361,7 @@ class Command(BaseCommand):
                 affiliation=state_aff, key=tp['key'],
                 defaults={
                     'order': tp['order'],
+                    'name': tp['uz_latn'],
                     'name_uz_latn': tp['uz_latn'],
                     'name_uz_cyrl': tp['uz_cyrl'],
                     'name_ru': tp['ru'],
@@ -380,6 +382,7 @@ class Command(BaseCommand):
                     type=tp, key=key,
                     defaults={
                         'order': order,
+                        'name': uz_latn,
                         'name_uz_latn': uz_latn,
                         'name_uz_cyrl': uz_cyrl,
                         'name_ru': ru,
