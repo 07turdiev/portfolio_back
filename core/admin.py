@@ -11,9 +11,22 @@ from .models import (
     AwardType,
     Direction,
     FamilyMember,
+    Language,
     Representative,
     RepresentativeAward,
 )
+
+
+# ── Tillar ────────────────────────────────────────────────────────────────
+
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ('order', 'code', 'name')
+    list_display_links = ('code', 'name')
+    list_editable = ('order',)
+    search_fields = ('code', 'name')
+    ordering = ('order', 'name')
+    prepopulated_fields = {'code': ('name',)}
 
 
 # ── Yo'nalishlar ──────────────────────────────────────────────────────────
@@ -145,6 +158,7 @@ class RepresentativeAdmin(admin.ModelAdmin):
 
     # ── Tahrirlash sahifasi ──────────────────────────────────────────────
     autocomplete_fields = ('direction',)
+    filter_horizontal = ('languages',)
     inlines = [FamilyMemberInline, RepresentativeAwardInline]
 
     # Barcha CharField/TextField inputlari forma ustunini to'liq egallaydi

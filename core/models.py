@@ -128,6 +128,24 @@ class AwardName(TimestampedModel):
         return self.type.affiliation
 
 
+# ── Tillar (vakil bilgan tillar) ──────────────────────────────────────────
+
+class Language(TimestampedModel):
+    """Til — vakil bilishi mumkin bo'lgan til."""
+
+    code = models.SlugField('Kod', max_length=30, unique=True)
+    name = models.CharField('Nomi', max_length=100)
+    order = models.PositiveIntegerField('Tartib', default=100)
+
+    class Meta:
+        verbose_name = 'Til'
+        verbose_name_plural = 'Tillar'
+        ordering = ('order', 'name')
+
+    def __str__(self):
+        return self.name
+
+
 # ── Vakillar ──────────────────────────────────────────────────────────────
 
 class Representative(TimestampedModel):
@@ -140,6 +158,35 @@ class Representative(TimestampedModel):
         (GENDER_FEMALE, 'Ayol'),
     ]
 
+    # ── Millati (eng kerakli millatlar yuqorida) ──────────────────────
+    NATIONALITY_CHOICES = [
+        ('ozbek', "O'zbek"),
+        ('qozoq', 'Qozoq'),
+        ('tojik', 'Tojik'),
+        ('rus', 'Rus'),
+        ('qoraqalpoq', 'Qoraqalpoq'),
+        ('qirgiz', "Qirg'iz"),
+        ('turkman', 'Turkman'),
+        ('tatar', 'Tatar'),
+        ('koreys', 'Koreys'),
+        ('uygur', "Uyg'ur"),
+        ('ukrain', 'Ukrain'),
+        ('belorus', 'Belorus'),
+        ('armani', 'Armani'),
+        ('ozarbayjon', 'Ozarbayjon'),
+        ('yahudiy', 'Yahudiy'),
+        ('bashqird', 'Bashqird'),
+        ('chuvash', 'Chuvash'),
+        ('lazgin', 'Lazgin'),
+        ('dungan', 'Dungan'),
+        ('turk', 'Turk'),
+        ('arab', 'Arab'),
+        ('eron', 'Eron'),
+        ('afgon', "Afg'on"),
+        ('hind', 'Hind'),
+        ('boshqa', 'Boshqa'),
+    ]
+
     direction = models.ForeignKey(
         Direction, on_delete=models.PROTECT,
         related_name='representatives', verbose_name="Yo'nalishi"
@@ -150,7 +197,9 @@ class Representative(TimestampedModel):
     middle_name = models.CharField('Otasining ismi', max_length=100, blank=True)
 
     gender = models.CharField('Jinsi', max_length=10, choices=GENDER_CHOICES)
-    nationality = models.CharField('Millati', max_length=64, blank=True)
+    nationality = models.CharField(
+        'Millati', max_length=30, choices=NATIONALITY_CHOICES, blank=True
+    )
     birth_date = models.DateField("Tug'ilgan sanasi", null=True, blank=True)
 
     birth_place = models.CharField("Tug'ilgan joyi", max_length=200, blank=True)
@@ -181,8 +230,9 @@ class Representative(TimestampedModel):
         'Ilmiy darajasi (unvoni)', max_length=200, blank=True,
         help_text="Masalan: \"san'atshunoslik fanlari nomzodi\" yoki \"Yo'q\""
     )
-    languages = models.CharField(
-        'Chet tillarni bilishi', max_length=200, blank=True
+    languages = models.ManyToManyField(
+        Language, blank=True, related_name='speakers',
+        verbose_name='Chet tillarni bilishi'
     )
     training = models.CharField(
         "Malaka oshirganligi (so'nggi 2 yilda)", max_length=300, blank=True
