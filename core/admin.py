@@ -1,5 +1,8 @@
 """Jazzmin bilan admin paneli."""
 from django.contrib import admin
+from django.db.models import CharField as DjangoCharField
+from django.db.models import TextField as DjangoTextField
+from django.forms import Textarea, TextInput
 from django.utils.html import format_html
 
 from .models import (
@@ -7,6 +10,7 @@ from .models import (
     AwardName,
     AwardType,
     Direction,
+    FamilyMember,
     Representative,
     RepresentativeAward,
 )
@@ -98,6 +102,13 @@ class AwardNameAdmin(admin.ModelAdmin):
 
 # ── Vakillar ──────────────────────────────────────────────────────────────
 
+class FamilyMemberInline(admin.TabularInline):
+    model = FamilyMember
+    extra = 1
+    fields = ('order', 'relation', 'name', 'info', 'note')
+    ordering = ('order', 'id')
+
+
 class RepresentativeAwardInline(admin.TabularInline):
     model = RepresentativeAward
     extra = 1
@@ -134,26 +145,75 @@ class RepresentativeAdmin(admin.ModelAdmin):
 
     # ── Tahrirlash sahifasi ──────────────────────────────────────────────
     autocomplete_fields = ('direction',)
-    inlines = [RepresentativeAwardInline]
-    readonly_fields = ('created_at', 'updated_at')
+    inlines = [FamilyMemberInline, RepresentativeAwardInline]
+
+    # Barcha CharField/TextField inputlari forma ustunini to'liq egallaydi
+    formfield_overrides = {
+        DjangoCharField: {
+            'widget': TextInput(
+                attrs={'style': 'width: 100%; max-width: 700px;'}
+            )
+        },
+        DjangoTextField: {
+            'widget': Textarea(
+                attrs={
+                    'style': 'width: 100%; max-width: 900px; min-height: 140px;',
+                    'rows': 6,
+                }
+            )
+        },
+    }
 
     fieldsets = (
-        ('Shaxsiy ma\'lumotlar', {
+        ("Shaxsiy ma'lumotlar", {
             'fields': (
-                ('direction', 'is_active'),
+                'direction',
+                'is_active',
                 'photo',
-                ('last_name', 'first_name', 'middle_name'),
-                ('gender', 'nationality', 'birth_date'),
+                'last_name',
+                'first_name',
+                'middle_name',
+                'gender',
+                'nationality',
+                'birth_date',
                 'birth_place',
                 'residence_place',
-            )
+            ),
         }),
-        ('Faoliyat', {
-            'fields': ('position',)
+        ("Oilasi haqida", {
+            'fields': ('marital_status',),
         }),
-        ('Texnik', {
-            'classes': ('collapse',),
-            'fields': ('created_at', 'updated_at'),
+        ("Ma'lumoti (ta'lim)", {
+            'fields': (
+                'university',
+                'specialty',
+                'academic_degree',
+                'languages',
+                'training',
+            ),
+        }),
+        ('Mehnat faoliyati', {
+            'fields': (
+                'position',
+                'career_level',
+                'total_experience',
+                'leadership_experience',
+                'leadership_positions',
+            ),
+        }),
+        ("Sog'lig'i", {
+            'fields': (
+                'health',
+                'last_medical_treatment',
+                'medical_checkup',
+                'health_problems',
+            ),
+        }),
+        ('Faoliyati haqida', {
+            'fields': (
+                'description',
+                'state_events',
+            ),
         }),
     )
 

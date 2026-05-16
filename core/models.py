@@ -163,8 +163,82 @@ class Representative(TimestampedModel):
         'Surati', upload_to='representatives/', null=True, blank=True
     )
 
-    position = models.CharField('Egallab turgan lavozimi', max_length=300, blank=True)
+    # ── Oilasi haqida ──────────────────────────────────────────────────
+    marital_status = models.CharField(
+        'Oilaviy va ijtimoiy ahvoli', max_length=300, blank=True,
+        help_text="Masalan: \"Oilali, 2 nafar farzandi bor\""
+    )
 
+    # ── Ma'lumoti (ta'lim) ─────────────────────────────────────────────
+    university = models.CharField(
+        'Tamomlagan OTM', max_length=300, blank=True,
+        help_text="Masalan: \"1971 y. Toshkent teatr instituti (kunduzgi)\""
+    )
+    specialty = models.CharField(
+        'Mutaxassisligi', max_length=300, blank=True
+    )
+    academic_degree = models.CharField(
+        'Ilmiy darajasi (unvoni)', max_length=200, blank=True,
+        help_text="Masalan: \"san'atshunoslik fanlari nomzodi\" yoki \"Yo'q\""
+    )
+    languages = models.CharField(
+        'Chet tillarni bilishi', max_length=200, blank=True
+    )
+    training = models.CharField(
+        "Malaka oshirganligi (so'nggi 2 yilda)", max_length=300, blank=True
+    )
+
+    # ── Mehnat faoliyati ──────────────────────────────────────────────
+    position = models.CharField('Egallab turgan lavozimi', max_length=300, blank=True)
+    career_level = models.CharField(
+        'Martaba darajasi', max_length=100, blank=True
+    )
+    total_experience = models.CharField(
+        'Umumiy mehnat staji', max_length=50, blank=True,
+        help_text="Masalan: \"33 yil\""
+    )
+    leadership_experience = models.CharField(
+        'Rahbarlik staji', max_length=50, blank=True,
+        help_text="Masalan: \"6 yil\" yoki \"Yo'q\""
+    )
+    leadership_positions = models.TextField(
+        'Faoliyat yuritgan rahbarlik lavozimlari', blank=True
+    )
+
+    # ── Sog'ligi ───────────────────────────────────────────────────────
+    HEALTH_GOOD = 'good'
+    HEALTH_AVERAGE = 'average'
+    HEALTH_POOR = 'poor'
+    HEALTH_DECEASED = 'deceased'
+    HEALTH_CHOICES = [
+        (HEALTH_GOOD, 'Yaxshi'),
+        (HEALTH_AVERAGE, "O'rtacha"),
+        (HEALTH_POOR, 'Qoniqarsiz'),
+        (HEALTH_DECEASED, 'Vafot etgan'),
+    ]
+
+    health = models.CharField(
+        "Sog'lig'i", max_length=20, choices=HEALTH_CHOICES, blank=True
+    )
+    last_medical_treatment = models.CharField(
+        'Qachon tibbiy muolaja olgan', max_length=300, blank=True
+    )
+    medical_checkup = models.CharField(
+        "Tibbiy ko'rikdan o'tganligi (so'nggi 2 yilda)", max_length=200, blank=True
+    )
+    health_problems = models.TextField(
+        "Sog'ligidagi muammolar", blank=True
+    )
+
+    # ── Faoliyati ──────────────────────────────────────────────────────
+    description = models.TextField(
+        'Mehnat faoliyati haqida qisqacha tavsifnoma', blank=True
+    )
+    state_events = models.TextField(
+        'Davlat tadbirlaridagi ishtiroki', blank=True
+    )
+
+    # ── Mukofotlar bog'lanishi ────────────────────────────────────────
     awards = models.ManyToManyField(
         AwardName, through='RepresentativeAward', blank=True,
         related_name='holders', verbose_name='Mukofotlari'
@@ -190,6 +264,49 @@ class Representative(TimestampedModel):
     @property
     def full_name(self):
         return ' '.join(p for p in [self.last_name, self.first_name, self.middle_name] if p)
+
+
+class FamilyMember(TimestampedModel):
+    """Vakilning oila a'zosi (otasi/onasi/turmush o'rtog'i/farzandi)."""
+
+    RELATION_FATHER = 'father'
+    RELATION_MOTHER = 'mother'
+    RELATION_SPOUSE = 'spouse'
+    RELATION_CHILD = 'child'
+    RELATION_OTHER = 'other'
+    RELATION_CHOICES = [
+        (RELATION_FATHER, 'Otasi'),
+        (RELATION_MOTHER, 'Onasi'),
+        (RELATION_SPOUSE, "Turmush o'rtog'i"),
+        (RELATION_CHILD, 'Farzandi'),
+        (RELATION_OTHER, 'Boshqa'),
+    ]
+
+    representative = models.ForeignKey(
+        'Representative', on_delete=models.CASCADE,
+        related_name='family_members', verbose_name='Vakil'
+    )
+    relation = models.CharField(
+        "Qarindoshlik darajasi", max_length=20, choices=RELATION_CHOICES
+    )
+    name = models.CharField('Ism sharifi', max_length=200)
+    info = models.CharField(
+        "Tug'ilgan yili va joyi", max_length=200, blank=True,
+        help_text="Masalan: \"1910 yil, Toshkent shahri\""
+    )
+    note = models.CharField(
+        'Qo\'shimcha izoh', max_length=300, blank=True,
+        help_text="Masalan: \"Uy bekasi\" yoki \"1946 yil vafot etgan\""
+    )
+    order = models.PositiveIntegerField('Tartib', default=0)
+
+    class Meta:
+        verbose_name = "Oila a'zosi"
+        verbose_name_plural = "Oila a'zolari"
+        ordering = ('representative', 'order', 'id')
+
+    def __str__(self):
+        return f'{self.get_relation_display()} — {self.name}'
 
 
 class RepresentativeAward(TimestampedModel):

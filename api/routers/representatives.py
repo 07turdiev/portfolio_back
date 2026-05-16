@@ -24,6 +24,15 @@ def _serialize(rep: Representative) -> dict:
             'award__type__affiliation'
         ).order_by('-year')
     ]
+    family = [
+        {
+            'relation': m.relation,
+            'name': m.name,
+            'info': m.info,
+            'note': m.note,
+        }
+        for m in rep.family_members.order_by('order', 'id')
+    ]
     return {
         'id': rep.id,
         'directionKey': rep.direction.key,
@@ -36,8 +45,35 @@ def _serialize(rep: Representative) -> dict:
         'birthDate': rep.birth_date.isoformat() if rep.birth_date else None,
         'birthPlace': rep.birth_place,
         'residencePlace': rep.residence_place,
-        'position': rep.position,
         'photo': rep.photo.url if rep.photo else None,
+        # Family
+        'maritalStatus': rep.marital_status,
+        'family': family,
+        # Education
+        'education': {
+            'university': rep.university,
+            'specialty': rep.specialty,
+            'academicDegree': rep.academic_degree,
+            'languages': rep.languages,
+            'training': rep.training,
+        },
+        # Work
+        'work': {
+            'position': rep.position,
+            'careerLevel': rep.career_level,
+            'totalExperience': rep.total_experience,
+            'leadershipExperience': rep.leadership_experience,
+            'leadershipPositions': rep.leadership_positions,
+            'health': rep.health,
+            'lastMedicalTreatment': rep.last_medical_treatment,
+            'medicalCheckup': rep.medical_checkup,
+            'healthProblems': rep.health_problems,
+        },
+        # Activity
+        'activity': {
+            'description': rep.description,
+            'stateEvents': rep.state_events,
+        },
         'awards': awards,
     }
 
