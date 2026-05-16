@@ -1,8 +1,10 @@
 """Jazzmin bilan admin paneli."""
+from datetime import date
+
 from django.contrib import admin
 from django.db.models import CharField as DjangoCharField
 from django.db.models import TextField as DjangoTextField
-from django.forms import Textarea, TextInput
+from django.forms import Select, Textarea, TextInput
 from django.utils.html import format_html
 
 from .models import (
@@ -128,6 +130,16 @@ class RepresentativeAwardInline(admin.TabularInline):
     fields = ('award', 'year')
     autocomplete_fields = ('award',)
     ordering = ('-year',)
+
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        formfield = super().formfield_for_dbfield(db_field, request, **kwargs)
+        if db_field.name == 'year':
+            current = date.today().year
+            choices = [('', '—')] + [
+                (y, str(y)) for y in range(current + 1, 1939, -1)
+            ]
+            formfield.widget = Select(choices=choices)
+        return formfield
 
 
 @admin.register(Representative)
