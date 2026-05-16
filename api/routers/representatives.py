@@ -45,9 +45,9 @@ def _serialize(rep: Representative) -> dict:
     return {
         'id': rep.id,
         'directionKey': rep.direction.key,
-        'lastName': rep.last_name,
-        'firstName': rep.first_name,
-        'middleName': rep.middle_name,
+        'lastName': _i18n(rep, 'last_name'),
+        'firstName': _i18n(rep, 'first_name'),
+        'middleName': _i18n(rep, 'middle_name'),
         'fullName': rep.full_name,
         'gender': rep.gender,
         'nationality': rep.nationality,

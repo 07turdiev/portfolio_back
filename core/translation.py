@@ -40,6 +40,9 @@ class AwardNameTR(TranslationOptions):
 @register(Representative)
 class RepresentativeTR(TranslationOptions):
     fields = (
+        'last_name',
+        'first_name',
+        'middle_name',
         'birth_place',
         'residence_place',
         'marital_status',
