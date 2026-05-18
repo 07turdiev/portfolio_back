@@ -92,7 +92,7 @@ def _serialize(rep: Representative) -> dict:
 @router.get('/people')
 async def list_people(
     direction: str | None = Query(None, description="Yo'nalish kaliti"),
-    gender: str | None = Query(None, regex='^(male|female)$'),
+    gender: str | None = Query(None, pattern='^(male|female)$'),
 ):
     """Vakillar ro'yxati (filtrlanadigan)."""
 

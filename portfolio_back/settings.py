@@ -105,7 +105,7 @@ JAZZMIN_SETTINGS = {
     'custom_css': 'admin/css/jazzmin_light.css',
     'topmenu_links': [
         {'name': 'Bosh sahifa', 'url': 'admin:index', 'permissions': ['auth.view_user']},
-        {'name': 'API hujjatlari', 'url': 'http://localhost:8001/docs', 'new_window': True},
+        {'name': 'API hujjatlari', 'url': '/docs', 'new_window': True},
     ],
     'icons': {
         'auth': 'fas fa-users-cog',
