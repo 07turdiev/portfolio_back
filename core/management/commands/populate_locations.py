@@ -42,9 +42,10 @@ class Command(BaseCommand):
     help = "Viloyat / Tuman / Mahalla ma'lumotlarini /data papkasidan to'ldiradi"
 
     def add_arguments(self, parser):
+        default_dir = Path(__file__).resolve().parent.parent.parent / 'data'
         parser.add_argument(
-            '--data-dir', default='../data',
-            help="JSON fayllar joylashgan papka (default: ../data)"
+            '--data-dir', default=str(default_dir),
+            help="JSON fayllar joylashgan papka (default: core/data/)"
         )
 
     def handle(self, *args, **options):

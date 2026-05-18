@@ -53,12 +53,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio_back.wsgi.application'
 ASGI_APPLICATION = 'portfolio_back.asgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+import os
+
+if os.environ.get('USE_SQLITE') == '1':
+    # Vaqtinchalik — eski SQLite dan dumpdata qilish uchun
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'portfolio_db',
+            'USER': 'portfolio',
+            'PASSWORD': '2002',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
