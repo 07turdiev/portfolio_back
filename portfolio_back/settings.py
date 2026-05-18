@@ -116,6 +116,9 @@ JAZZMIN_SETTINGS = {
         'core.awardaffiliation': 'fas fa-landmark',
         'core.awardtype': 'fas fa-trophy',
         'core.awardname': 'fas fa-award',
+        'core.region': 'fas fa-map',
+        'core.district': 'fas fa-map-marked-alt',
+        'core.mahalla': 'fas fa-map-pin',
     },
     'order_with_respect_to': [
         'core.representative',
@@ -123,6 +126,9 @@ JAZZMIN_SETTINGS = {
         'core.awardaffiliation',
         'core.awardtype',
         'core.awardname',
+        'core.region',
+        'core.district',
+        'core.mahalla',
         'auth',
     ],
 }

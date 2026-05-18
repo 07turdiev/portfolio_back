@@ -120,6 +120,79 @@ class AwardName(TimestampedModel):
         return self.type.affiliation
 
 
+# ── Hududiy bo'linish (Viloyat → Tuman → Mahalla) ─────────────────────────
+
+class Region(TimestampedModel):
+    """Viloyat (yoki shahar). SOATO kodi PrimaryKey sifatida."""
+
+    soato = models.CharField(
+        'SOATO kodi', max_length=10, primary_key=True,
+        help_text='Masalan: 1703 (Andijon), 1726 (Toshkent shahri)'
+    )
+    slug = models.SlugField(
+        'Slug (frontend xarita kaliti)', max_length=64, blank=True,
+        help_text="Frontend SVG xaritasi uchun, masalan: 'andijon', 'toshkent-shahri'"
+    )
+    name_uz_latn = models.CharField("Nomi (uz-latn)", max_length=150)
+    name_uz_cyrl = models.CharField("Nomi (uz-cyrl)", max_length=150, blank=True)
+    name_ru = models.CharField("Nomi (ru)", max_length=150, blank=True)
+
+    class Meta:
+        verbose_name = 'Viloyat'
+        verbose_name_plural = 'Viloyatlar'
+        ordering = ('name_uz_latn',)
+
+    def __str__(self):
+        return self.name_uz_latn
+
+
+class District(TimestampedModel):
+    """Tuman/shahar. SOATO kodi PrimaryKey."""
+
+    soato = models.CharField('SOATO kodi', max_length=10, primary_key=True)
+    region = models.ForeignKey(
+        Region, on_delete=models.CASCADE,
+        related_name='districts', verbose_name='Viloyati'
+    )
+    slug = models.SlugField('Slug', max_length=64, blank=True)
+    name_uz_latn = models.CharField("Nomi (uz-latn)", max_length=200)
+    name_uz_cyrl = models.CharField("Nomi (uz-cyrl)", max_length=200, blank=True)
+    name_ru = models.CharField("Nomi (ru)", max_length=200, blank=True)
+
+    class Meta:
+        verbose_name = 'Tuman'
+        verbose_name_plural = 'Tumanlar'
+        ordering = ('region', 'name_uz_latn')
+        indexes = [models.Index(fields=['region'])]
+
+    def __str__(self):
+        return f'{self.name_uz_latn} ({self.region.name_uz_latn})'
+
+
+class Mahalla(TimestampedModel):
+    """Mahalla. TIN kodi PrimaryKey."""
+
+    tin = models.CharField('TIN kodi', max_length=20, primary_key=True)
+    district = models.ForeignKey(
+        District, on_delete=models.CASCADE,
+        related_name='mahallas', verbose_name='Tumani'
+    )
+    code = models.CharField('Mahalla kodi', max_length=20, blank=True)
+    name_uz_latn = models.CharField("Nomi (uz-latn)", max_length=200)
+    name_uz_cyrl = models.CharField("Nomi (uz-cyrl)", max_length=200, blank=True)
+    name_ru = models.CharField("Nomi (ru)", max_length=200, blank=True)
+    name_en = models.CharField("Nomi (en)", max_length=200, blank=True)
+
+    class Meta:
+        verbose_name = 'Mahalla'
+        verbose_name_plural = 'Mahallalar'
+        ordering = ('district', 'name_uz_latn')
+        indexes = [models.Index(fields=['district'])]
+
+    def __str__(self):
+        return f'{self.name_uz_latn} — {self.district.name_uz_latn}'
+
+
 # ── Tillar (vakil bilgan tillar) ──────────────────────────────────────────
 
 class Language(TimestampedModel):
@@ -195,9 +268,15 @@ class Representative(TimestampedModel):
     birth_date = models.DateField("Tug'ilgan sanasi", null=True, blank=True)
 
     birth_place = models.CharField("Tug'ilgan joyi", max_length=200, blank=True)
+
+    residence_mahalla = models.ForeignKey(
+        Mahalla, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='residents', verbose_name='Hozirgi yashash joyi (mahalla)',
+        help_text='Viloyat → tuman → mahalla tanlanadi. Xaritada marker shu tumanga qo\'yiladi.'
+    )
     residence_place = models.CharField(
-        'Hozirgi yashash joyi', max_length=200, blank=True,
-        help_text='Xaritada marker shu manzilga qo\'yiladi'
+        "Yashash manzili (qo'shimcha)", max_length=200, blank=True,
+        help_text="Mahalladan tashqari aniqlashtirish: ko'cha, uy raqami"
     )
 
     photo = models.ImageField(

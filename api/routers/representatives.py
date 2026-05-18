@@ -16,6 +16,29 @@ def _i18n(obj, field: str) -> dict:
     }
 
 
+def _loc_name(obj) -> dict:
+    return {
+        'uz_latn': obj.name_uz_latn or '',
+        'uz_cyrl': obj.name_uz_cyrl or '',
+        'ru': obj.name_ru or '',
+    }
+
+
+def _residence(rep) -> dict | None:
+    """Hozirgi yashash joyi — mahalla + tuman + viloyat."""
+    if not rep.residence_mahalla_id:
+        return None
+    m = rep.residence_mahalla
+    d = m.district
+    r = d.region
+    return {
+        'mahalla': {'tin': m.tin, 'name': _loc_name(m)},
+        'district': {'soato': d.soato, 'slug': d.slug, 'name': _loc_name(d)},
+        'region': {'soato': r.soato, 'slug': r.slug, 'name': _loc_name(r)},
+        'extra': rep.residence_place or '',
+    }
+
+
 def _serialize(rep: Representative) -> dict:
     awards = [
         {
@@ -54,7 +77,7 @@ def _serialize(rep: Representative) -> dict:
         'nationalityDisplay': rep.get_nationality_display() if rep.nationality else '',
         'birthDate': rep.birth_date.isoformat() if rep.birth_date else None,
         'birthPlace': _i18n(rep, 'birth_place'),
-        'residencePlace': _i18n(rep, 'residence_place'),
+        'residence': _residence(rep),
         'photo': rep.photo.url if rep.photo else None,
         # Family
         'maritalStatus': _i18n(rep, 'marital_status'),
@@ -98,7 +121,9 @@ async def list_people(
 
     @sync_to_async
     def _fetch():
-        qs = Representative.objects.filter(is_active=True).select_related('direction')
+        qs = Representative.objects.filter(is_active=True).select_related(
+            'direction', 'residence_mahalla__district__region',
+        )
         if direction:
             qs = qs.filter(direction__key=direction)
         if gender:
@@ -113,7 +138,11 @@ async def get_person(pk: int):
     @sync_to_async
     def _fetch():
         try:
-            return _serialize(Representative.objects.get(pk=pk, is_active=True))
+            return _serialize(
+                Representative.objects.select_related(
+                    'direction', 'residence_mahalla__district__region',
+                ).get(pk=pk, is_active=True)
+            )
         except Representative.DoesNotExist:
             return None
 

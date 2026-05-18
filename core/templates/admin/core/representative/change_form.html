@@ -1,0 +1,65 @@
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+{{ block.super }}
+
+<script>
+var CASCADE_DATA = {
+    districts: {{ districts_json|safe }},
+    mahallas: {{ mahallas_json|safe }}
+};
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var $ = django.jQuery;
+        var $r = $('#id_region');
+        var $d = $('#id_district');
+        var $m = $('#id_residence_mahalla');
+        if (!$r.length || !$d.length || !$m.length) return;
+
+        var savedD = $d.val();
+        var savedM = $m.val();
+
+        // Select2 ni olib tashlash (oddiy native select ishlashi uchun)
+        [$r, $d, $m].forEach(function($el) {
+            if ($el.data('select2')) {
+                $el.select2('destroy');
+            }
+        });
+
+        function fill($sel, items, saved, ph) {
+            $sel.empty().append('<option value="">' + ph + '</option>');
+            (items || []).forEach(function(item) {
+                var sel = String(item.id) === String(saved) ? ' selected' : '';
+                $sel.append('<option value="' + item.id + '"' + sel + '>' + item.name + '</option>');
+            });
+        }
+
+        $r[0].onchange = function() {
+            savedD = ''; savedM = '';
+            fill($d, CASCADE_DATA.districts[this.value] || [], '', '-- Tumanni tanlang --');
+            fill($m, [], '', '-- Avval tuman tanlang --');
+        };
+
+        $d[0].onchange = function() {
+            savedM = '';
+            fill($m, CASCADE_DATA.mahallas[this.value] || [], '', '-- Mahallani tanlang --');
+        };
+
+        // Sahifa yuklanganda: viloyat tanlangan bo'lsa, tuman/mahalla larni to'ldiramiz
+        if ($r.val()) {
+            fill($d, CASCADE_DATA.districts[$r.val()] || [], savedD, '-- Tumanni tanlang --');
+            if ($d.val()) {
+                fill($m, CASCADE_DATA.mahallas[$d.val()] || [], savedM, '-- Mahallani tanlang --');
+            }
+        } else {
+            // Hech narsa tanlanmagan
+            fill($d, [], '', '-- Avval viloyat tanlang --');
+            fill($m, [], '', '-- Avval tuman tanlang --');
+        }
+
+        console.log('[CASCADE] Viloyat → Tuman → Mahalla tayyor');
+    }, 500);
+});
+</script>
+{% endblock %}
