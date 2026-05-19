@@ -1,0 +1,1238 @@
+{
+  "1703202": {
+    "slug": "an-olt",
+    "uz_latn": "Oltinko'l tumani",
+    "uz_cyrl": "Олтинкўл тумани",
+    "ru": "Алтынкульский район"
+  },
+  "1703203": {
+    "slug": "an-and",
+    "uz_latn": "Andijon tumani",
+    "uz_cyrl": "Андижон тумани",
+    "ru": "Андижанский район"
+  },
+  "1703206": {
+    "slug": "an-baliq",
+    "uz_latn": "Baliqchi tumani",
+    "uz_cyrl": "Балиқчи тумани",
+    "ru": "Балыкчинский район"
+  },
+  "1703209": {
+    "slug": "an-boz",
+    "uz_latn": "Bo'ston tumani",
+    "uz_cyrl": "Бўстон тумани",
+    "ru": "Бозский район"
+  },
+  "1703210": {
+    "slug": "an-bul",
+    "uz_latn": "Buloqboshi tumani",
+    "uz_cyrl": "Булоқбоши тумани",
+    "ru": "Булакбашинский район"
+  },
+  "1703211": {
+    "slug": "an-jal",
+    "uz_latn": "Jalaquduq tumani",
+    "uz_cyrl": "Жалақудуқ тумани",
+    "ru": "Жалакудукский район"
+  },
+  "1703214": {
+    "slug": "an-izb",
+    "uz_latn": "Izboskan tumani",
+    "uz_cyrl": "Избоскан тумани",
+    "ru": "Избасканский район"
+  },
+  "1703217": {
+    "slug": "an-ulug",
+    "uz_latn": "Ulug'nor tumani",
+    "uz_cyrl": "Улуғнор тумани",
+    "ru": "Улугнорский район"
+  },
+  "1703220": {
+    "slug": "an-qur",
+    "uz_latn": "Qo'rg'ontepa tumani",
+    "uz_cyrl": "Қўрғонтепа тумани",
+    "ru": "Кургантепинский район"
+  },
+  "1703224": {
+    "slug": "an-asa",
+    "uz_latn": "Asaka tumani",
+    "uz_cyrl": "Асака тумани",
+    "ru": "Асакинский район"
+  },
+  "1703227": {
+    "slug": "an-mar",
+    "uz_latn": "Marhamat tumani",
+    "uz_cyrl": "Марҳамат тумани",
+    "ru": "Мархаматский район"
+  },
+  "1703230": {
+    "slug": "an-shax",
+    "uz_latn": "Shaxrixon tumani",
+    "uz_cyrl": "Шахрихон тумани",
+    "ru": "Шахриханский район"
+  },
+  "1703232": {
+    "slug": "an-pax",
+    "uz_latn": "Paxtaobod tumani",
+    "uz_cyrl": "Пахтаобод тумани",
+    "ru": "Пахтаабадский район"
+  },
+  "1703236": {
+    "slug": "an-xoj",
+    "uz_latn": "Xo'jaobod tumani",
+    "uz_cyrl": "Хўжаобод тумани",
+    "ru": "Ходжаабадский район"
+  },
+  "1703401": {
+    "slug": "an-and-sh",
+    "uz_latn": "Andijon shahar",
+    "uz_cyrl": "Андижон шаҳар",
+    "ru": "город Андижан"
+  },
+  "1703408": {
+    "slug": "an-xon-sh",
+    "uz_latn": "Xonobod shahar",
+    "uz_cyrl": "Хонобод шаҳар",
+    "ru": "город Ханабад"
+  },
+  "1706204": {
+    "slug": "bu-olot",
+    "uz_latn": "Olot tumani",
+    "uz_cyrl": "Олот тумани",
+    "ru": "Алатский район"
+  },
+  "1706207": {
+    "slug": "bu-bux",
+    "uz_latn": "Buxoro tumani",
+    "uz_cyrl": "Бухоро тумани",
+    "ru": "Бухарский район"
+  },
+  "1706212": {
+    "slug": "bu-vob",
+    "uz_latn": "Vobkent tumani",
+    "uz_cyrl": "Вобкент тумани",
+    "ru": "Вабкентский район"
+  },
+  "1706215": {
+    "slug": "bu-gij",
+    "uz_latn": "G'ijduvon tumani",
+    "uz_cyrl": "Ғиждувон тумани",
+    "ru": "Гиждуванский район"
+  },
+  "1706219": {
+    "slug": "bu-kog",
+    "uz_latn": "Kogon tumani",
+    "uz_cyrl": "Когон тумани",
+    "ru": "Каганский район"
+  },
+  "1706230": {
+    "slug": "bu-qor-k",
+    "uz_latn": "Qorako'l tumani",
+    "uz_cyrl": "Қоракўл тумани",
+    "ru": "Каракульский район"
+  },
+  "1706232": {
+    "slug": "bu-qor",
+    "uz_latn": "Qorovulbozor tumani",
+    "uz_cyrl": "Қоровулбозор тумани",
+    "ru": "Караулбазарский район"
+  },
+  "1706240": {
+    "slug": "bu-pesh",
+    "uz_latn": "Peshku tumani",
+    "uz_cyrl": "Пешку тумани",
+    "ru": "Пешкунский район"
+  },
+  "1706242": {
+    "slug": "bu-rom",
+    "uz_latn": "Romitan tumani",
+    "uz_cyrl": "Ромитан тумани",
+    "ru": "Ромитанский район"
+  },
+  "1706246": {
+    "slug": "bu-jon",
+    "uz_latn": "Jondor tumani",
+    "uz_cyrl": "Жондор тумани",
+    "ru": "Жондорский район"
+  },
+  "1706258": {
+    "slug": "bu-shof",
+    "uz_latn": "Shofirkon tumani",
+    "uz_cyrl": "Шофиркон тумани",
+    "ru": "Шафирканский район"
+  },
+  "1706401": {
+    "slug": "bu-bux-sh",
+    "uz_latn": "Buxoro shahar",
+    "uz_cyrl": "Бухоро шаҳар",
+    "ru": "город Бухара"
+  },
+  "1706403": {
+    "slug": "bu-kog-sh",
+    "uz_latn": "Kogon shahar",
+    "uz_cyrl": "Когон шаҳар",
+    "ru": "город Каган"
+  },
+  "1708201": {
+    "slug": "jiz-arn",
+    "uz_latn": "Arnasoy tumani",
+    "uz_cyrl": "Арнасой тумани",
+    "ru": "Арнасайский район"
+  },
+  "1708204": {
+    "slug": "jiz-bax",
+    "uz_latn": "Baxmal tumani",
+    "uz_cyrl": "Бахмал тумани",
+    "ru": "Бахмальский район"
+  },
+  "1708209": {
+    "slug": "jiz-g-al",
+    "uz_latn": "G'allaorol tumani",
+    "uz_cyrl": "Ғаллаорол тумани",
+    "ru": "Галляаральский район"
+  },
+  "1708212": {
+    "slug": "jiz-shar",
+    "uz_latn": "Sharof Rashidov tumani",
+    "uz_cyrl": "Шароф Рашидов тумани",
+    "ru": "Шароф Рашидовский район"
+  },
+  "1708215": {
+    "slug": "jiz-dos",
+    "uz_latn": "Do'stlik tumani",
+    "uz_cyrl": "Дўстлик тумани",
+    "ru": "Дустликский район"
+  },
+  "1708218": {
+    "slug": "jiz-zom",
+    "uz_latn": "Zomin tumani",
+    "uz_cyrl": "Зомин тумани",
+    "ru": "Заминский район"
+  },
+  "1708220": {
+    "slug": "jiz-zarb",
+    "uz_latn": "Zarbdor tumani",
+    "uz_cyrl": "Зарбдор тумани",
+    "ru": "Зарбдорский район"
+  },
+  "1708223": {
+    "slug": "jiz-mir",
+    "uz_latn": "Mirzacho'l tumani",
+    "uz_cyrl": "Мирзачўл тумани",
+    "ru": "Мирзачульский район"
+  },
+  "1708225": {
+    "slug": "jiz-zaf",
+    "uz_latn": "Zafarobod tumani",
+    "uz_cyrl": "Зафаробод тумани",
+    "ru": "Зафарабадский район"
+  },
+  "1708228": {
+    "slug": "jiz-pax",
+    "uz_latn": "Paxtakor tumani",
+    "uz_cyrl": "Пахтакор тумани",
+    "ru": "Пахтакорский район"
+  },
+  "1708235": {
+    "slug": "jiz-for",
+    "uz_latn": "Forish tumani",
+    "uz_cyrl": "Фориш тумани",
+    "ru": "Фаришский район"
+  },
+  "1708237": {
+    "slug": "jiz-yan",
+    "uz_latn": "Yangiobod tumani",
+    "uz_cyrl": "Янгиобод тумани",
+    "ru": "Янгиабадский район"
+  },
+  "1708401": {
+    "slug": "jiz-jiz-sh",
+    "uz_latn": "Jizzax shahar",
+    "uz_cyrl": "Жиззах шаҳар",
+    "ru": "город Джизак"
+  },
+  "1710207": {
+    "slug": "qash-g`uz",
+    "uz_latn": "G'uzor tumani",
+    "uz_cyrl": "Ғузор тумани",
+    "ru": "Гузарский район"
+  },
+  "1710212": {
+    "slug": "qash-dex",
+    "uz_latn": "Dehqonobod tumani",
+    "uz_cyrl": "Деҳқонобод тумани",
+    "ru": "Дехканабадский район"
+  },
+  "1710220": {
+    "slug": "qash-kam",
+    "uz_latn": "Qamashi tumani",
+    "uz_cyrl": "Қамаши тумани",
+    "ru": "Камашинский район"
+  },
+  "1710224": {
+    "slug": "qash-qash",
+    "uz_latn": "Qarshi tumani",
+    "uz_cyrl": "Қарши тумани",
+    "ru": "Каршинский район"
+  },
+  "1710229": {
+    "slug": "qash-kos",
+    "uz_latn": "Koson tumani",
+    "uz_cyrl": "Косон тумани",
+    "ru": "Касанский район"
+  },
+  "1710232": {
+    "slug": "qash-kit",
+    "uz_latn": "Kitob tumani",
+    "uz_cyrl": "Китоб тумани",
+    "ru": "Китабский район"
+  },
+  "1710233": {
+    "slug": "qash-mir",
+    "uz_latn": "Mirishkor tumani",
+    "uz_cyrl": "Миришкор тумани",
+    "ru": "Миришкорский район"
+  },
+  "1710234": {
+    "slug": "qash-mub",
+    "uz_latn": "Muborak tumani",
+    "uz_cyrl": "Муборак тумани",
+    "ru": "Мубарекский район"
+  },
+  "1710235": {
+    "slug": "qash-nish",
+    "uz_latn": "Nishon tumani",
+    "uz_cyrl": "Нишон тумани",
+    "ru": "Нишанский район"
+  },
+  "1710237": {
+    "slug": "qash-kas",
+    "uz_latn": "Kasbi tumani",
+    "uz_cyrl": "Касби тумани",
+    "ru": "Касбинский район"
+  },
+  "1710240": {
+    "slug": "qash-kok",
+    "uz_latn": "Ko'kdala tumani",
+    "uz_cyrl": "Кўкдала тумани",
+    "ru": "Кўкдалинский район"
+  },
+  "1710242": {
+    "slug": "qash-chir",
+    "uz_latn": "Chiroqchi tumani",
+    "uz_cyrl": "Чироқчи тумани",
+    "ru": "Чиракчинский район"
+  },
+  "1710245": {
+    "slug": "qash-sh-tu",
+    "uz_latn": "Shaxrisabz tumani",
+    "uz_cyrl": "Шахрисабз тумани",
+    "ru": "Шахрисабзский район"
+  },
+  "1710250": {
+    "slug": "qash-yak",
+    "uz_latn": "Yakkabog' tumani",
+    "uz_cyrl": "Яккабоғ тумани",
+    "ru": "Яккабагский район"
+  },
+  "1710401": {
+    "slug": "qash-qarsh",
+    "uz_latn": "Qarshi shahar",
+    "uz_cyrl": "Қарши шаҳар",
+    "ru": "город Карши"
+  },
+  "1710405": {
+    "slug": "qash-shax",
+    "uz_latn": "Shahrisabz shahar",
+    "uz_cyrl": "Шаҳрисабз шаҳар",
+    "ru": "город Шахрисабз"
+  },
+  "1712211": {
+    "slug": "nav-kon",
+    "uz_latn": "Konimex tumani",
+    "uz_cyrl": "Конимех тумани",
+    "ru": "Канимехский район"
+  },
+  "1712216": {
+    "slug": "nav-qiz",
+    "uz_latn": "Qiziltepa tumani",
+    "uz_cyrl": "Қизилтепа тумани",
+    "ru": "Кызылтепинский район"
+  },
+  "1712230": {
+    "slug": "nav-nov",
+    "uz_latn": "Navbahor tumani",
+    "uz_cyrl": "Навбаҳор тумани",
+    "ru": "Навбахорский район"
+  },
+  "1712234": {
+    "slug": "nav-kar",
+    "uz_latn": "Karmana tumani",
+    "uz_cyrl": "Кармана тумани",
+    "ru": "Карманинский район"
+  },
+  "1712238": {
+    "slug": "nav-nur",
+    "uz_latn": "Nurota tumani",
+    "uz_cyrl": "Нурота тумани",
+    "ru": "Нуратинский район"
+  },
+  "1712244": {
+    "slug": "nav-tom",
+    "uz_latn": "Tomdi tumani",
+    "uz_cyrl": "Томди тумани",
+    "ru": "Тамдынский район"
+  },
+  "1712248": {
+    "slug": "nav-uchq",
+    "uz_latn": "Uchquduq tumani",
+    "uz_cyrl": "Учқудуқ тумани",
+    "ru": "Учкудукский район"
+  },
+  "1712251": {
+    "slug": "nav-xat",
+    "uz_latn": "Xatirchi tumani",
+    "uz_cyrl": "Хатирчи тумани",
+    "ru": "Хатырчинский район"
+  },
+  "1712401": {
+    "slug": "nav-nav-sh",
+    "uz_latn": "Navoiy shahar",
+    "uz_cyrl": "Навоий шаҳар",
+    "ru": "город Навои"
+  },
+  "1712408": {
+    "slug": "nav-zar-sh",
+    "uz_latn": "Zarafshon shahar",
+    "uz_cyrl": "Зарафшон шаҳар",
+    "ru": "город Зарафшан"
+  },
+  "1712412": {
+    "slug": "nav-Gazgan",
+    "uz_latn": "G'ozg'on shahar",
+    "uz_cyrl": "Ғозғон шаҳар",
+    "ru": "город Газган"
+  },
+  "1714204": {
+    "slug": "nam-ming",
+    "uz_latn": "Mingbuloq tumani",
+    "uz_cyrl": "Мингбулоқ тумани",
+    "ru": "Мингбулакский район"
+  },
+  "1714207": {
+    "slug": "nam-kos",
+    "uz_latn": "Kosonsoy tumani",
+    "uz_cyrl": "Косонсой тумани",
+    "ru": "Касансайский район"
+  },
+  "1714212": {
+    "slug": "nam-nam",
+    "uz_latn": "Namangan tumani",
+    "uz_cyrl": "Наманган тумани",
+    "ru": "Наманганский район"
+  },
+  "1714216": {
+    "slug": "nam-nor",
+    "uz_latn": "Norin tumani",
+    "uz_cyrl": "Норин тумани",
+    "ru": "Нарынский район"
+  },
+  "1714219": {
+    "slug": "nam-pop",
+    "uz_latn": "Pop tumani",
+    "uz_cyrl": "Поп тумани",
+    "ru": "Папский район"
+  },
+  "1714224": {
+    "slug": "nam-tur",
+    "uz_latn": "To'raqo'rg'on tumani",
+    "uz_cyrl": "Тўрақўрғон тумани",
+    "ru": "Туракурганский район"
+  },
+  "1714229": {
+    "slug": "nam-uych",
+    "uz_latn": "Uychi tumani",
+    "uz_cyrl": "Уйчи тумани",
+    "ru": "Уйчинский район"
+  },
+  "1714234": {
+    "slug": "nam-uchq",
+    "uz_latn": "Uchqo'rg'on tumani",
+    "uz_cyrl": "Учқўрғон тумани",
+    "ru": "Учкурганский район"
+  },
+  "1714236": {
+    "slug": "nam-chor",
+    "uz_latn": "Chortoq tumani",
+    "uz_cyrl": "Чортоқ тумани",
+    "ru": "Чартакский район"
+  },
+  "1714237": {
+    "slug": "nam-chus",
+    "uz_latn": "Chust tumani",
+    "uz_cyrl": "Чуст тумани",
+    "ru": "Чустский район"
+  },
+  "1714242": {
+    "slug": "nam-yan",
+    "uz_latn": "Yangiqo'rg'on tumani",
+    "uz_cyrl": "Янгиқўрғон тумани",
+    "ru": "Янгикурганский район"
+  },
+  "1714401": {
+    "slug": "nam-nam_sh",
+    "uz_latn": "Namangan shahar",
+    "uz_cyrl": "Наманган шаҳар",
+    "ru": "город Наманган"
+  },
+  "1718203": {
+    "slug": "sam-oqd",
+    "uz_latn": "Oqdaryo tumani",
+    "uz_cyrl": "Оқдарё тумани",
+    "ru": "Акдарьинский район"
+  },
+  "1718206": {
+    "slug": "sam-bul",
+    "uz_latn": "Bulung'ur tumani",
+    "uz_cyrl": "Булунғур тумани",
+    "ru": "Булунгурский район"
+  },
+  "1718209": {
+    "slug": "sam-jom",
+    "uz_latn": "Jomboy tumani",
+    "uz_cyrl": "Жомбой тумани",
+    "ru": "Джамбайский район"
+  },
+  "1718212": {
+    "slug": "sam-isht",
+    "uz_latn": "Ishtixon tumani",
+    "uz_cyrl": "Иштихон тумани",
+    "ru": "Иштыханский район"
+  },
+  "1718215": {
+    "slug": "sam-kat",
+    "uz_latn": "Kattaqo'rg'on tumani",
+    "uz_cyrl": "Каттақўрғон тумани",
+    "ru": "Каттакурганский район"
+  },
+  "1718216": {
+    "slug": "sam-qosh",
+    "uz_latn": "Qo'shrabot tumani",
+    "uz_cyrl": "Қўшработ тумани",
+    "ru": "Кошрабадский район"
+  },
+  "1718218": {
+    "slug": "sam-nar",
+    "uz_latn": "Narpay tumani",
+    "uz_cyrl": "Нарпай тумани",
+    "ru": "Нарпайский район"
+  },
+  "1718224": {
+    "slug": "sam-pay",
+    "uz_latn": "Payariq tumani",
+    "uz_cyrl": "Паяриқ тумани",
+    "ru": "Пайарыкский район"
+  },
+  "1718227": {
+    "slug": "sam-past",
+    "uz_latn": "Pastdarg'om tumani",
+    "uz_cyrl": "Пастдарғом тумани",
+    "ru": "Пастдаргомский район"
+  },
+  "1718230": {
+    "slug": "sam-pax",
+    "uz_latn": "Paxtachi tumani",
+    "uz_cyrl": "Пахтачи тумани",
+    "ru": "Пахтачийский район"
+  },
+  "1718233": {
+    "slug": "sam-sam",
+    "uz_latn": "Samarqand tumani",
+    "uz_cyrl": "Самарқанд тумани",
+    "ru": "Самаркандский район"
+  },
+  "1718235": {
+    "slug": "sam-nur",
+    "uz_latn": "Nurobod tumani",
+    "uz_cyrl": "Нуробод тумани",
+    "ru": "Нурабадский район"
+  },
+  "1718236": {
+    "slug": "sam-urg",
+    "uz_latn": "Urgut tumani",
+    "uz_cyrl": "Ургут тумани",
+    "ru": "Ургутский район"
+  },
+  "1718238": {
+    "slug": "sam-toy",
+    "uz_latn": "Tayloq tumani",
+    "uz_cyrl": "Тайлоқ тумани",
+    "ru": "Тайлакский район"
+  },
+  "1718401": {
+    "slug": "sam-sam-sh",
+    "uz_latn": "Samarqand shahar",
+    "uz_cyrl": "Самарқанд шаҳар",
+    "ru": "город Самарканд"
+  },
+  "1718406": {
+    "slug": "sam-katgsh",
+    "uz_latn": "Kattaqo'rg'on shahar",
+    "uz_cyrl": "Каттақўрғон шаҳар",
+    "ru": "город Каттакурган"
+  },
+  "1722201": {
+    "slug": "sur-olt",
+    "uz_latn": "Oltinsoy tumani",
+    "uz_cyrl": "Олтинсой тумани",
+    "ru": "Алтынсайский район"
+  },
+  "1722202": {
+    "slug": "sur-ang",
+    "uz_latn": "Angor tumani",
+    "uz_cyrl": "Ангор тумани",
+    "ru": "Ангорский район"
+  },
+  "1722203": {
+    "slug": "sur-ban",
+    "uz_latn": "Bandixon tumani",
+    "uz_cyrl": "Бандихон тумани",
+    "ru": "Бандиханский район"
+  },
+  "1722204": {
+    "slug": "sur-boy",
+    "uz_latn": "Boysun tumani",
+    "uz_cyrl": "Бойсун тумани",
+    "ru": "Байсунский район"
+  },
+  "1722207": {
+    "slug": "sur-muz",
+    "uz_latn": "Muzrabot tumani",
+    "uz_cyrl": "Музработ тумани",
+    "ru": "Музрабадский район"
+  },
+  "1722210": {
+    "slug": "sur-den",
+    "uz_latn": "Denov tumani",
+    "uz_cyrl": "Денов тумани",
+    "ru": "Денауский район"
+  },
+  "1722212": {
+    "slug": "sur-jar",
+    "uz_latn": "Jarqo'rg'on tumani",
+    "uz_cyrl": "Жарқўрғон тумани",
+    "ru": "Джаркурганский район"
+  },
+  "1722214": {
+    "slug": "sur-qum",
+    "uz_latn": "Qumqo'rg'on tumani",
+    "uz_cyrl": "Қумқўрғон тумани",
+    "ru": "Кумкурганский район"
+  },
+  "1722215": {
+    "slug": "sur-qiz",
+    "uz_latn": "Qiziriq tumani",
+    "uz_cyrl": "Қизириқ тумани",
+    "ru": "Кизирикский район"
+  },
+  "1722217": {
+    "slug": "sur-sar",
+    "uz_latn": "Sariosiyo tumani",
+    "uz_cyrl": "Сариосиё тумани",
+    "ru": "Сариасийский район"
+  },
+  "1722220": {
+    "slug": "sur-ter",
+    "uz_latn": "Termiz tumani",
+    "uz_cyrl": "Термиз тумани",
+    "ru": "Термезский район"
+  },
+  "1722221": {
+    "slug": "sur-uzu",
+    "uz_latn": "Uzun tumani",
+    "uz_cyrl": "Узун тумани",
+    "ru": "Узунский район"
+  },
+  "1722223": {
+    "slug": "sur-sher",
+    "uz_latn": "Sherobod tumani",
+    "uz_cyrl": "Шеробод тумани",
+    "ru": "Шерабадский район"
+  },
+  "1722226": {
+    "slug": "sur-sho`r",
+    "uz_latn": "Sho'rchi tumani",
+    "uz_cyrl": "Шўрчи тумани",
+    "ru": "Шурчинский район"
+  },
+  "1722401": {
+    "slug": "sur-ter-sh",
+    "uz_latn": "Termiz shahar",
+    "uz_cyrl": "Термиз шаҳар",
+    "ru": "город Термез"
+  },
+  "1724206": {
+    "slug": "sir-oqolt",
+    "uz_latn": "Oqoltin tumani",
+    "uz_cyrl": "Оқолтин тумани",
+    "ru": "Акалтынский район"
+  },
+  "1724212": {
+    "slug": "sir-boy",
+    "uz_latn": "Boyovut tumani",
+    "uz_cyrl": "Боёвут тумани",
+    "ru": "Баяутский район"
+  },
+  "1724216": {
+    "slug": "sir-say",
+    "uz_latn": "Sayxunobod tumani",
+    "uz_cyrl": "Сайхунобод тумани",
+    "ru": "Сайхунабадский район"
+  },
+  "1724220": {
+    "slug": "sir-gul",
+    "uz_latn": "Guliston tumani",
+    "uz_cyrl": "Гулистон тумани",
+    "ru": "Гулистанский район"
+  },
+  "1724226": {
+    "slug": "sir-sar",
+    "uz_latn": "Sardoba tumani",
+    "uz_cyrl": "Сардоба тумани",
+    "ru": "Сардобинский район"
+  },
+  "1724228": {
+    "slug": "sir-mir",
+    "uz_latn": "Mirzaobod tumani",
+    "uz_cyrl": "Мирзаобод тумани",
+    "ru": "Мирзаабадский район"
+  },
+  "1724231": {
+    "slug": "sir-sir",
+    "uz_latn": "Sirdaryo tumani",
+    "uz_cyrl": "Сирдарё тумани",
+    "ru": "Сырдарьинский район"
+  },
+  "1724235": {
+    "slug": "sir-xov",
+    "uz_latn": "Xovos tumani",
+    "uz_cyrl": "Ховос тумани",
+    "ru": "Хавастский район"
+  },
+  "1724401": {
+    "slug": "sr-gul-sh",
+    "uz_latn": "Guliston shahar",
+    "uz_cyrl": "Гулистон шаҳар",
+    "ru": "город Гулистан"
+  },
+  "1724410": {
+    "slug": "sr-shir-sh",
+    "uz_latn": "Shirin shahar",
+    "uz_cyrl": "Ширин шаҳар",
+    "ru": "город Ширин"
+  },
+  "1724413": {
+    "slug": "sr-yangi-s",
+    "uz_latn": "Yangiyer shahar",
+    "uz_cyrl": "Янгийер шаҳар",
+    "ru": "город Янгиер"
+  },
+  "1726262": {
+    "slug": "tsh-ucht",
+    "uz_latn": "Uchtepa tumani",
+    "uz_cyrl": "Учтепа тумани",
+    "ru": "Учтепинский район"
+  },
+  "1726264": {
+    "slug": "tsh-bek",
+    "uz_latn": "Bektemir tumani",
+    "uz_cyrl": "Бектемир тумани",
+    "ru": "Бектемирский район"
+  },
+  "1726266": {
+    "slug": "tsh-yun",
+    "uz_latn": "Yunusobod tumani",
+    "uz_cyrl": "Юнусобод тумани",
+    "ru": "Юнусабадский район"
+  },
+  "1726269": {
+    "slug": "tsh-mirz",
+    "uz_latn": "Mirzo Ulug'bek tumani",
+    "uz_cyrl": "Мирзо Улуғбек тумани",
+    "ru": "Мирзо Улугбекский район"
+  },
+  "1726273": {
+    "slug": "tsh-mir",
+    "uz_latn": "Mirobod tumani",
+    "uz_cyrl": "Миробод тумани",
+    "ru": "Мирабадский район"
+  },
+  "1726277": {
+    "slug": "tsh-shay",
+    "uz_latn": "Shayxontoxur tumani",
+    "uz_cyrl": "Шайхонтохур тумани",
+    "ru": "Шайхантахурский район"
+  },
+  "1726280": {
+    "slug": "tsh-olm",
+    "uz_latn": "Olmazor tumani",
+    "uz_cyrl": "Олмазор тумани",
+    "ru": "Алмазарский район"
+  },
+  "1726283": {
+    "slug": "tsh-ser",
+    "uz_latn": "Sirg'ali tumani",
+    "uz_cyrl": "Сирғали тумани",
+    "ru": "Сергелийский район"
+  },
+  "1726287": {
+    "slug": "tsh-yak",
+    "uz_latn": "Yakkasaroy tumani",
+    "uz_cyrl": "Яккасарой тумани",
+    "ru": "Яккасарайский район"
+  },
+  "1726290": {
+    "slug": "tsh-yash",
+    "uz_latn": "Yashnobod tumani",
+    "uz_cyrl": "Яшнобод тумани",
+    "ru": "Яшнабадский район"
+  },
+  "1726292": {
+    "slug": "tsh-y-hay",
+    "uz_latn": "Yangi hayot tumani",
+    "uz_cyrl": "Янги ҳаёт тумани",
+    "ru": "Янгихаётский район"
+  },
+  "1726294": {
+    "slug": "tsh-chil",
+    "uz_latn": "Chilonzor tumani",
+    "uz_cyrl": "Чилонзор тумани",
+    "ru": "Чиланзарский район"
+  },
+  "1727206": {
+    "slug": "tosh-oqqr",
+    "uz_latn": "Oqqo'rg'on tumani",
+    "uz_cyrl": "Оққўрғон тумани",
+    "ru": "Аккурганский район"
+  },
+  "1727212": {
+    "slug": "tosh-axan",
+    "uz_latn": "Ohangaron tumani",
+    "uz_cyrl": "Оҳангарон тумани",
+    "ru": "Ахангаранский район"
+  },
+  "1727220": {
+    "slug": "tosh-bek",
+    "uz_latn": "Bekobod tumani",
+    "uz_cyrl": "Бекобод тумани",
+    "ru": "Бекабадский район"
+  },
+  "1727224": {
+    "slug": "tosh-bos",
+    "uz_latn": "Bo'stonliq tumani",
+    "uz_cyrl": "Бўстонлиқ тумани",
+    "ru": "Бостанлыкский район"
+  },
+  "1727228": {
+    "slug": "tosh-buk",
+    "uz_latn": "Bo'ka tumani",
+    "uz_cyrl": "Бўка тумани",
+    "ru": "Букинский район"
+  },
+  "1727233": {
+    "slug": "tosh-quych",
+    "uz_latn": "Quyichirchiq tumani",
+    "uz_cyrl": "Қуйичирчиқ тумани",
+    "ru": "Куйичирчикский район"
+  },
+  "1727237": {
+    "slug": "tosh-zan",
+    "uz_latn": "Zangiota tumani",
+    "uz_cyrl": "Зангиота тумани",
+    "ru": "Зангиатинский район"
+  },
+  "1727239": {
+    "slug": "tosh-yuqch",
+    "uz_latn": "Yuqorichirchiq tumani",
+    "uz_cyrl": "Юқоричирчиқ тумани",
+    "ru": "Юкоричирчикский район"
+  },
+  "1727248": {
+    "slug": "tosh-qib",
+    "uz_latn": "Qibray tumani",
+    "uz_cyrl": "Қибрай тумани",
+    "ru": "Кибрайский район"
+  },
+  "1727249": {
+    "slug": "tosh-par",
+    "uz_latn": "Parkent tumani",
+    "uz_cyrl": "Паркент тумани",
+    "ru": "Паркентский район"
+  },
+  "1727250": {
+    "slug": "tosh-pis",
+    "uz_latn": "Piskent tumani",
+    "uz_cyrl": "Пискент тумани",
+    "ru": "Пскентский район"
+  },
+  "1727253": {
+    "slug": "tosh-ortch",
+    "uz_latn": "O'rtachirchiq tumani",
+    "uz_cyrl": "Ўртачирчиқ тумани",
+    "ru": "Уртачирчикский район"
+  },
+  "1727256": {
+    "slug": "tosh-chin",
+    "uz_latn": "Chinoz tumani",
+    "uz_cyrl": "Чиноз тумани",
+    "ru": "Чиназский район"
+  },
+  "1727259": {
+    "slug": "tosh-yan",
+    "uz_latn": "Yangiyo'l tumani",
+    "uz_cyrl": "Янгийўл тумани",
+    "ru": "Янгиюльский район"
+  },
+  "1727265": {
+    "slug": "tosh-tosh",
+    "uz_latn": "Toshkent tumani",
+    "uz_cyrl": "Тошкент тумани",
+    "ru": "Ташкентский район"
+  },
+  "1727401": {
+    "slug": "tosh-nursh",
+    "uz_latn": "Nurafshon shahri",
+    "uz_cyrl": "Нурафшон шаҳри",
+    "ru": "город Нурафшон"
+  },
+  "1727404": {
+    "slug": "tosh-olmsh",
+    "uz_latn": "Olmaliq shahar",
+    "uz_cyrl": "Олмалиқ шаҳар",
+    "ru": "город Алмалык"
+  },
+  "1727407": {
+    "slug": "tosh-ang",
+    "uz_latn": "Angren shahar",
+    "uz_cyrl": "Ангрен шаҳар",
+    "ru": "город Ангрен"
+  },
+  "1727413": {
+    "slug": "tosh-beksh",
+    "uz_latn": "Bekobod shahar",
+    "uz_cyrl": "Бекобод шаҳар",
+    "ru": "город Бекабад"
+  },
+  "1727415": {
+    "slug": "tosh-ohash",
+    "uz_latn": "Ohangaron shahri",
+    "uz_cyrl": "Оҳангарон шаҳри",
+    "ru": "город Ахангаран"
+  },
+  "1727419": {
+    "slug": "tosh-chir",
+    "uz_latn": "Chirchiq shahar",
+    "uz_cyrl": "Чирчиқ шаҳар",
+    "ru": "город Чирчик"
+  },
+  "1727424": {
+    "slug": "tosh-yang",
+    "uz_latn": "Yangiyo'l shahar",
+    "uz_cyrl": "Янгийўл шаҳар",
+    "ru": "город Янгиюль"
+  },
+  "1730203": {
+    "slug": "far-olt",
+    "uz_latn": "Oltiariq tumani",
+    "uz_cyrl": "Олтиариқ тумани",
+    "ru": "Алтыарыкский район"
+  },
+  "1730206": {
+    "slug": "far-qosh",
+    "uz_latn": "Qo'shtepa tumani",
+    "uz_cyrl": "Қўштепа тумани",
+    "ru": "Куштепинский район"
+  },
+  "1730209": {
+    "slug": "far-bag",
+    "uz_latn": "Bog'dod tumani",
+    "uz_cyrl": "Боғдод тумани",
+    "ru": "Багдадский район"
+  },
+  "1730212": {
+    "slug": "far-buv",
+    "uz_latn": "Buvayda tumani",
+    "uz_cyrl": "Бувайда тумани",
+    "ru": "Бувайдинский район"
+  },
+  "1730215": {
+    "slug": "far-besh",
+    "uz_latn": "Beshariq tumani",
+    "uz_cyrl": "Бешариқ тумани",
+    "ru": "Бешарыкский район"
+  },
+  "1730218": {
+    "slug": "far-quv",
+    "uz_latn": "Quva tumani",
+    "uz_cyrl": "Қува тумани",
+    "ru": "Кувинский район"
+  },
+  "1730221": {
+    "slug": "far-uchk",
+    "uz_latn": "Uchko'prik tumani",
+    "uz_cyrl": "Учкўприк тумани",
+    "ru": "Учкуприкский район"
+  },
+  "1730224": {
+    "slug": "far-rish",
+    "uz_latn": "Rishton tumani",
+    "uz_cyrl": "Риштон тумани",
+    "ru": "Риштанский район"
+  },
+  "1730226": {
+    "slug": "far-sux",
+    "uz_latn": "So'x tumani",
+    "uz_cyrl": "Сўх тумани",
+    "ru": "Сохский район"
+  },
+  "1730227": {
+    "slug": "far-tosh",
+    "uz_latn": "Toshloq tumani",
+    "uz_cyrl": "Тошлоқ тумани",
+    "ru": "Ташлакский район"
+  },
+  "1730230": {
+    "slug": "far-uzb",
+    "uz_latn": "O'zbekiston tumani",
+    "uz_cyrl": "Ўзбекистон тумани",
+    "ru": "Узбекистанский район"
+  },
+  "1730233": {
+    "slug": "far-far",
+    "uz_latn": "Farg'ona tumani",
+    "uz_cyrl": "Фарғона тумани",
+    "ru": "Ферганский район"
+  },
+  "1730236": {
+    "slug": "far-dan",
+    "uz_latn": "Dang'ara tumani",
+    "uz_cyrl": "Данғара тумани",
+    "ru": "Дангаринский район"
+  },
+  "1730238": {
+    "slug": "far-fur",
+    "uz_latn": "Furqat tumani",
+    "uz_cyrl": "Фурқат тумани",
+    "ru": "Фуркатский район"
+  },
+  "1730242": {
+    "slug": "far-yoz",
+    "uz_latn": "Yozyovon tumani",
+    "uz_cyrl": "Ёзёвон тумани",
+    "ru": "Язъяванский район"
+  },
+  "1730401": {
+    "slug": "far-far-sh",
+    "uz_latn": "Farg'ona shahar",
+    "uz_cyrl": "Фарғона шаҳар",
+    "ru": "город Фергана"
+  },
+  "1730405": {
+    "slug": "far-qo`qsh",
+    "uz_latn": "Qo'qon shahar",
+    "uz_cyrl": "Қўқон шаҳар",
+    "ru": "город Коканд"
+  },
+  "1730408": {
+    "slug": "far-quv-sh",
+    "uz_latn": "Quvasoy shahar",
+    "uz_cyrl": "Қувасой шаҳар",
+    "ru": "город Кувасай"
+  },
+  "1730412": {
+    "slug": "far-margsh",
+    "uz_latn": "Marg'ilon shahar",
+    "uz_cyrl": "Марғилон шаҳар",
+    "ru": "город Маргилан"
+  },
+  "1733204": {
+    "slug": "xor-bog",
+    "uz_latn": "Bog'ot tumani",
+    "uz_cyrl": "Боғот тумани",
+    "ru": "Багатский район"
+  },
+  "1733208": {
+    "slug": "xor-gur",
+    "uz_latn": "Gurlan tumani",
+    "uz_cyrl": "Гурлан тумани",
+    "ru": "Гурленский район"
+  },
+  "1733212": {
+    "slug": "xor-qosh",
+    "uz_latn": "Qo'shko'pir tumani",
+    "uz_cyrl": "Қўшкўпир тумани",
+    "ru": "Кошкупырский район"
+  },
+  "1733217": {
+    "slug": "xor-urg",
+    "uz_latn": "Urganch tumani",
+    "uz_cyrl": "Урганч тумани",
+    "ru": "Ургенчский район"
+  },
+  "1733220": {
+    "slug": "xor-xaz",
+    "uz_latn": "Xazorasp tumani",
+    "uz_cyrl": "Хазорасп тумани",
+    "ru": "Хазараспский район"
+  },
+  "1733221": {
+    "slug": "xor-tuproq",
+    "uz_latn": "Tuproqqal'a tumani",
+    "uz_cyrl": "Тупроққалъа тумани",
+    "ru": "Тупроккалинский район"
+  },
+  "1733223": {
+    "slug": "xor-xan",
+    "uz_latn": "Xonqa tumani",
+    "uz_cyrl": "Хонқа тумани",
+    "ru": "Ханкинский район"
+  },
+  "1733226": {
+    "slug": "xor-xiv",
+    "uz_latn": "Xiva tumani",
+    "uz_cyrl": "Хива тумани",
+    "ru": "Хивинский район"
+  },
+  "1733230": {
+    "slug": "xor-shov",
+    "uz_latn": "Shovot tumani",
+    "uz_cyrl": "Шовот тумани",
+    "ru": "Шаватский район"
+  },
+  "1733233": {
+    "slug": "xor-yan",
+    "uz_latn": "Yangiariq tumani",
+    "uz_cyrl": "Янгиариқ тумани",
+    "ru": "Янгиарыкский район"
+  },
+  "1733236": {
+    "slug": "xor-yangib",
+    "uz_latn": "Yangibozor tumani",
+    "uz_cyrl": "Янгибозор тумани",
+    "ru": "Янгибазарский район"
+  },
+  "1733401": {
+    "slug": "xor-urg-sh",
+    "uz_latn": "Urganch shahar",
+    "uz_cyrl": "Урганч шаҳар",
+    "ru": "город Ургенч"
+  },
+  "1733406": {
+    "slug": "xor-xiv-sh",
+    "uz_latn": "Xiva shahar",
+    "uz_cyrl": "Хива шаҳар",
+    "ru": "город Хива"
+  },
+  "1735204": {
+    "slug": "qr-amu",
+    "uz_latn": "Amudaryo tumani",
+    "uz_cyrl": "Амударё тумани",
+    "ru": "Амударьинский район"
+  },
+  "1735207": {
+    "slug": "qr-ber",
+    "uz_latn": "Beruniy tumani",
+    "uz_cyrl": "Беруний тумани",
+    "ru": "Берунийский район"
+  },
+  "1735209": {
+    "slug": "qr-buz",
+    "uz_latn": "Bo'zatov tumani",
+    "uz_cyrl": "Бўзатов тумани",
+    "ru": "Бузатауский район"
+  },
+  "1735211": {
+    "slug": "qr-qor",
+    "uz_latn": "Qorao'zak tumani",
+    "uz_cyrl": "Қораўзак тумани",
+    "ru": "Караузякский район"
+  },
+  "1735212": {
+    "slug": "qr-keg",
+    "uz_latn": "Kegeyli tumani",
+    "uz_cyrl": "Кегейли тумани",
+    "ru": "Кегейлийский район"
+  },
+  "1735215": {
+    "slug": "qr-qun",
+    "uz_latn": "Qo'ng'irot tumani",
+    "uz_cyrl": "Қўнғирот тумани",
+    "ru": "Кунградский район"
+  },
+  "1735218": {
+    "slug": "qr-qon",
+    "uz_latn": "Qonliko'l tumani",
+    "uz_cyrl": "Қонликўл тумани",
+    "ru": "Канлыкульский район"
+  },
+  "1735222": {
+    "slug": "qr-moy",
+    "uz_latn": "Mo'ynoq tumani",
+    "uz_cyrl": "Мўйноқ тумани",
+    "ru": "Муйнакский район"
+  },
+  "1735225": {
+    "slug": "qr-nuk",
+    "uz_latn": "Nukus tumani",
+    "uz_cyrl": "Нукус тумани",
+    "ru": "Нукусский район"
+  },
+  "1735228": {
+    "slug": "qr-taxi-sh",
+    "uz_latn": "Taxiatosh tumani",
+    "uz_cyrl": "Тахиатош тумани",
+    "ru": "Тахиаташский район"
+  },
+  "1735230": {
+    "slug": "qr-tax",
+    "uz_latn": "Taxtako'pir tumani",
+    "uz_cyrl": "Тахтакўпир тумани",
+    "ru": "Тахтакупырский район"
+  },
+  "1735233": {
+    "slug": "qr-tur",
+    "uz_latn": "To'rtko'l tumani",
+    "uz_cyrl": "Тўрткўл тумани",
+    "ru": "Турткульский район"
+  },
+  "1735236": {
+    "slug": "qr-xoj",
+    "uz_latn": "Xo'jayli tumani",
+    "uz_cyrl": "Хўжайли тумани",
+    "ru": "Ходжейлийский район"
+  },
+  "1735240": {
+    "slug": "qr-chim",
+    "uz_latn": "Chimboy tumani",
+    "uz_cyrl": "Чимбой тумани",
+    "ru": "Чимбайский район"
+  },
+  "1735243": {
+    "slug": "qr-shum",
+    "uz_latn": "Shumanay tumani",
+    "uz_cyrl": "Шуманай тумани",
+    "ru": "Шуманайский район"
+  },
+  "1735250": {
+    "slug": "qr-ellik",
+    "uz_latn": "Ellikqal'a tumani",
+    "uz_cyrl": "Елликқалъа тумани",
+    "ru": "Элликкалинский район"
+  },
+  "1735401": {
+    "slug": "qr-nuk-sh",
+    "uz_latn": "Nukus shahar",
+    "uz_cyrl": "Нукус шаҳар",
+    "ru": "город Нукус"
+  }
+}

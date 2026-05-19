@@ -1,5 +1,6 @@
 """Vakillar endpoint."""
 from asgiref.sync import sync_to_async
+from django.db.models import Q
 from fastapi import APIRouter, HTTPException, Query
 
 from core.models import Representative
@@ -122,8 +123,11 @@ def _serialize(rep: Representative) -> dict:
 async def list_people(
     direction: str | None = Query(None, description="Yo'nalish kaliti"),
     gender: str | None = Query(None, pattern='^(male|female)$'),
+    region: str | None = Query(None, description="Viloyat slug yoki SOATO"),
+    district: str | None = Query(None, description="Tuman slug yoki SOATO"),
+    q: str | None = Query(None, description="Qidiruv (F.I.O., lavozim, tuman, viloyat) — 3 til"),
 ):
-    """Vakillar ro'yxati (filtrlanadigan)."""
+    """Vakillar ro'yxati. Filtrlash: yo'nalish, jins, viloyat, tuman, qidiruv (q)."""
 
     @sync_to_async
     def _fetch():
@@ -134,6 +138,44 @@ async def list_people(
             qs = qs.filter(direction__key=direction)
         if gender:
             qs = qs.filter(gender=gender)
+        if region:
+            qs = qs.filter(
+                Q(residence_mahalla__district__region__slug=region)
+                | Q(residence_mahalla__district__region__soato=region)
+            )
+        if district:
+            qs = qs.filter(
+                Q(residence_mahalla__district__slug=district)
+                | Q(residence_mahalla__district__soato=district)
+            )
+        if q:
+            # 3 tilli qidiruv: F.I.O., lavozim, tuman/viloyat nomi, mahalla
+            qs = qs.filter(
+                Q(last_name_uz_latn__icontains=q)
+                | Q(last_name_uz_cyrl__icontains=q)
+                | Q(last_name_ru__icontains=q)
+                | Q(first_name_uz_latn__icontains=q)
+                | Q(first_name_uz_cyrl__icontains=q)
+                | Q(first_name_ru__icontains=q)
+                | Q(middle_name_uz_latn__icontains=q)
+                | Q(middle_name_uz_cyrl__icontains=q)
+                | Q(middle_name_ru__icontains=q)
+                | Q(position_uz_latn__icontains=q)
+                | Q(position_uz_cyrl__icontains=q)
+                | Q(position_ru__icontains=q)
+                | Q(birth_place_uz_latn__icontains=q)
+                | Q(birth_place_uz_cyrl__icontains=q)
+                | Q(birth_place_ru__icontains=q)
+                | Q(residence_mahalla__name_uz_latn__icontains=q)
+                | Q(residence_mahalla__name_uz_cyrl__icontains=q)
+                | Q(residence_mahalla__name_ru__icontains=q)
+                | Q(residence_mahalla__district__name_uz_latn__icontains=q)
+                | Q(residence_mahalla__district__name_uz_cyrl__icontains=q)
+                | Q(residence_mahalla__district__name_ru__icontains=q)
+                | Q(residence_mahalla__district__region__name_uz_latn__icontains=q)
+                | Q(residence_mahalla__district__region__name_uz_cyrl__icontains=q)
+                | Q(residence_mahalla__district__region__name_ru__icontains=q)
+            ).distinct()
         return [_serialize(r) for r in qs]
 
     return {'results': await _fetch()}
