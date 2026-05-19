@@ -158,6 +158,8 @@ class District(TimestampedModel):
     name_uz_latn = models.CharField("Nomi (uz-latn)", max_length=200)
     name_uz_cyrl = models.CharField("Nomi (uz-cyrl)", max_length=200, blank=True)
     name_ru = models.CharField("Nomi (ru)", max_length=200, blank=True)
+    lat = models.FloatField('Centroid kenglik (lat)', null=True, blank=True)
+    lng = models.FloatField('Centroid uzunlik (lng)', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Tuman'

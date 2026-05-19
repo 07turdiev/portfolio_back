@@ -33,7 +33,13 @@ def _residence(rep) -> dict | None:
     r = d.region
     return {
         'mahalla': {'tin': m.tin, 'name': _loc_name(m)},
-        'district': {'soato': d.soato, 'slug': d.slug, 'name': _loc_name(d)},
+        'district': {
+            'soato': d.soato,
+            'slug': d.slug,
+            'name': _loc_name(d),
+            'lat': d.lat,
+            'lng': d.lng,
+        },
         'region': {'soato': r.soato, 'slug': r.slug, 'name': _loc_name(r)},
         'extra': rep.residence_place or '',
     }
