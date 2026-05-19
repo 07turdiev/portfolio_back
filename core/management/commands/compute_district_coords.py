@@ -130,11 +130,42 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
-        # GeoJSON
-        repo_root = Path(__file__).resolve().parent.parent.parent.parent.parent
-        geo_path = repo_root / 'data' / 'geojson' / 'uzbekistan.geojson'
-        if not geo_path.exists():
-            self.stderr.write(f'GeoJSON topilmadi: {geo_path}')
+        # 1) Avval oldindan hisoblangan centroidlar JSON ni tekshirish
+        centroids_json = (
+            Path(__file__).resolve().parent.parent.parent / 'data' / 'district_centroids.json'
+        )
+        if centroids_json.exists():
+            with open(centroids_json, encoding='utf-8') as f:
+                cached = json.load(f)
+            count = 0
+            for d in District.objects.all():
+                c = cached.get(d.soato)
+                if c:
+                    d.lat = c['lat']
+                    d.lng = c['lng']
+                    if not options['dry_run']:
+                        d.save(update_fields=['lat', 'lng'])
+                    count += 1
+            self.stdout.write(self.style.SUCCESS(
+                f'Cached centroids dan {count} ta tuman yangilandi'
+            ))
+            return
+
+        # 2) Aks holda GeoJSON dan hisoblash
+        bases = [
+            Path(__file__).resolve().parent.parent.parent / 'data' / 'geojson',
+            Path(__file__).resolve().parent.parent.parent.parent.parent / 'data' / 'geojson',
+        ]
+        geo_path = None
+        for base in bases:
+            p = base / 'uzbekistan.geojson'
+            if p.exists():
+                geo_path = p
+                break
+        if geo_path is None:
+            self.stderr.write(
+                'GeoJSON yoki district_centroids.json topilmadi.'
+            )
             return
 
         with open(geo_path, encoding='utf-8') as f:
