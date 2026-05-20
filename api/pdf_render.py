@@ -175,7 +175,7 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
 <style>
   @page {
     size: A4 landscape;
-    margin: 6mm;
+    margin: 5mm;
   }
 
   * { box-sizing: border-box; }
@@ -185,8 +185,8 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
     padding: 0;
     font-family: "Public Sans", "Segoe UI", Tahoma, sans-serif;
     color: #172b4d;
-    font-size: 9pt;
-    line-height: 1.4;
+    font-size: 7.5pt;
+    line-height: 1.35;
     background: white;
   }
 
@@ -198,20 +198,20 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
   .hero {
     background: linear-gradient(to right, #1e325c 0%, #4775ff 100%);
     color: white;
-    padding: 4mm 7mm;
-    border-radius: 3mm 3mm 0 0;
+    padding: 3mm 6mm;
+    border-radius: 2mm 2mm 0 0;
   }
   .hero-label {
-    font-size: 6.5pt;
+    font-size: 6pt;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.3em;
     color: rgba(255,255,255,0.65);
   }
   .hero-name {
-    font-size: 15pt;
+    font-size: 13pt;
     font-weight: 700;
-    margin: 0.8mm 0 1.5mm 0;
+    margin: 0.5mm 0 1mm 0;
     line-height: 1.2;
   }
   .deceased-tag {
@@ -220,49 +220,50 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
     font-size: 0.7em;
   }
   .hero-meta {
-    font-size: 9pt;
+    font-size: 8pt;
     color: rgba(255,255,255,0.92);
-    line-height: 1.4;
+    line-height: 1.3;
   }
-  .hero-meta > span { margin-right: 5mm; }
+  .hero-meta > span { margin-right: 4mm; }
   .hero-position {
     background: rgba(255,255,255,0.16);
-    padding: 0.5mm 3mm;
+    padding: 0.3mm 2.5mm;
     border-radius: 99px;
-    font-size: 8pt;
+    font-size: 7pt;
     font-weight: 500;
     display: inline-block;
   }
 
-  /* ─── 3-ustun layout (flexbox) ────────────────────────── */
+  /* ─── 3-ustun: TABLE layout (WeasyPrint uchun ishonchli) */
   .grid {
-    display: flex;
-    gap: 5mm;
-    padding: 5mm 6mm;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 3mm 0;
+    margin-top: 3mm;
+    table-layout: fixed;
   }
-  .col {
-    flex: 1;
-    min-width: 0;
-  }
-  .col > .section + .section {
-    margin-top: 4mm;
+  .grid > tbody > tr > td {
+    vertical-align: top;
+    width: 33.33%;
+    padding: 0;
   }
 
   /* ─── Bo'lim kartochkasi ───────────────────────────────── */
   .section {
     border: 0.25mm solid #e5e7eb;
-    border-radius: 2mm;
-    overflow: hidden;
-    page-break-inside: avoid;
+    border-radius: 1.5mm;
+    margin-bottom: 3mm;
   }
   .section-header {
-    padding: 2mm 4mm;
+    padding: 1.5mm 3mm;
     border-left-width: 0.8mm;
     border-left-style: solid;
+    border-top-left-radius: 1.5mm;
+    border-top-right-radius: 1.5mm;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    font-size: 8pt;
+    font-size: 7pt;
   }
   .sh-blue   { background: #eef3f9; border-left-color: #5b87b3; color: #3f6286; }
   .sh-green  { background: #eef3e9; border-left-color: #7d9b6e; color: #536b46; }
@@ -271,62 +272,69 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
 
   /* ─── Shaxsiy ma'lumotlar (rasm + qatorlar) ──────────── */
   .personal-body {
-    padding: 4mm;
+    padding: 3mm;
   }
   .photo-row {
-    display: flex;
-    gap: 4mm;
+    display: table;
+    width: 100%;
+  }
+  .photo-cell {
+    display: table-cell;
+    width: 22mm;
+    vertical-align: top;
+    padding-right: 3mm;
   }
   .photo {
-    width: 25mm;
-    height: 34mm;
+    width: 22mm;
+    height: 29mm;
     object-fit: cover;
     border: 0.25mm solid #e5e7eb;
     border-radius: 1mm;
-    flex-shrink: 0;
     background: #f3f4f6;
+    display: block;
   }
   .rows-wrap {
-    flex: 1;
-    min-width: 0;
+    display: table-cell;
+    vertical-align: top;
   }
   .row {
-    display: flex;
-    gap: 2mm;
-    padding: 1mm 0;
+    display: table;
+    width: 100%;
+    padding: 0.6mm 0;
     border-bottom: 0.2mm solid #f3f4f6;
-    font-size: 8.5pt;
+    font-size: 7.5pt;
   }
   .row:last-child { border-bottom: none; }
   .row .label {
+    display: table-cell;
     width: 38%;
     color: #6b778c;
-    flex-shrink: 0;
+    padding-right: 1.5mm;
   }
   .row .value {
+    display: table-cell;
     width: 62%;
     color: #1e325c;
     font-weight: 500;
   }
-  .place-rows { margin-top: 1mm; }
+  .place-rows { margin-top: 0.5mm; }
 
   /* ─── Ta'lim / Mehnat qatorlari ──────────────────────── */
   .rows-section {
-    padding: 2mm 4mm;
+    padding: 1.5mm 3mm;
   }
   .rows-section .row {
-    padding: 1.2mm 0;
-    gap: 3mm;
+    padding: 0.8mm 0;
   }
 
   /* ─── Oilasi haqida ──────────────────────────────────── */
   .family-info-body {
-    padding: 2.5mm 4mm;
-    font-size: 8.5pt;
+    padding: 2mm 3mm;
+    font-size: 7.5pt;
   }
   .fi-label {
     color: #6b778c;
-    margin-bottom: 0.8mm;
+    margin-bottom: 0.5mm;
   }
   .fi-value {
     color: #1e325c;
@@ -335,17 +343,17 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
 
   /* ─── Oila a'zolari ──────────────────────────────────── */
   .family-member {
-    padding: 2mm 4mm;
+    padding: 1.5mm 3mm;
     border-bottom: 0.2mm solid #f3f4f6;
-    font-size: 8.5pt;
+    font-size: 7.5pt;
   }
   .family-member:last-child { border-bottom: none; }
   .fm-relation {
     color: #6b778c;
-    font-size: 7pt;
+    font-size: 6.5pt;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    margin-bottom: 0.5mm;
+    margin-bottom: 0.3mm;
   }
   .fm-name {
     color: #1e325c;
@@ -353,45 +361,51 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
   }
   .fm-info {
     color: #6b778c;
-    font-size: 7.8pt;
+    font-size: 7pt;
   }
 
   /* ─── Mukofotlar ─────────────────────────────────────── */
   .achievements {
-    padding: 2mm 4mm;
+    padding: 1.5mm 3mm;
   }
   .ach-item {
-    display: flex;
-    gap: 3mm;
-    padding: 1.5mm 0;
+    display: table;
+    width: 100%;
+    padding: 1mm 0;
     border-bottom: 0.2mm solid #f3f4f6;
-    align-items: flex-start;
   }
   .ach-item:last-child { border-bottom: none; }
   .ach-year {
+    display: table-cell;
+    width: 11mm;
+    vertical-align: top;
     background: #eef3e9;
     color: #536b46;
-    font-size: 7pt;
+    font-size: 6.5pt;
     font-weight: 700;
-    padding: 1mm 2.2mm;
+    padding: 0.8mm 1.5mm;
     border-radius: 1mm;
-    flex-shrink: 0;
     text-align: center;
     line-height: 1.1;
   }
+  .ach-spacer {
+    display: table-cell;
+    width: 2mm;
+  }
   .ach-title {
-    flex: 1;
-    font-size: 8.5pt;
+    display: table-cell;
+    vertical-align: top;
+    font-size: 7.5pt;
     color: #1e325c;
-    line-height: 1.4;
+    line-height: 1.35;
   }
 
   /* ─── Erkin matn (tavsifnoma, davlat tadbirlari) ────── */
   .free-text {
-    padding: 3mm 4mm;
-    font-size: 8.5pt;
+    padding: 2mm 3mm;
+    font-size: 7.5pt;
     color: #172b4d;
-    line-height: 1.55;
+    line-height: 1.45;
     text-align: justify;
   }
 </style>
@@ -412,141 +426,145 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- 3-ustun -->
-  <div class="grid">
+  <!-- 3-ustun layout: TABLE (WeasyPrint flex'dan ko'ra ishonchli) -->
+  <table class="grid">
+    <tr>
 
-    <!-- ─── Ustun 1 ─────────────────────────────── -->
-    <div class="col">
+      <!-- ─── Ustun 1 ─────────────────────────────── -->
+      <td>
 
-      <!-- Shaxsiy ma'lumotlar -->
-      <div class="section">
-        <div class="section-header sh-blue">{{ L.personal }}</div>
-        <div class="personal-body">
-          <div class="photo-row">
-            {% if photo_path %}<img class="photo" src="{{ photo_path }}" />
-            {% else %}<div class="photo"></div>{% endif %}
-            <div class="rows-wrap">
-              {% for r in personal_rows %}
+        <div class="section">
+          <div class="section-header sh-blue">{{ L.personal }}</div>
+          <div class="personal-body">
+            <div class="photo-row">
+              <div class="photo-cell">
+                {% if photo_path %}<img class="photo" src="{{ photo_path }}" />
+                {% else %}<div class="photo"></div>{% endif %}
+              </div>
+              <div class="rows-wrap">
+                {% for r in personal_rows %}
+                <div class="row">
+                  <div class="label">{{ r.l }}</div>
+                  <div class="value">{{ r.v }}</div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% if place_rows %}
+            <div class="place-rows">
+              {% for r in place_rows %}
               <div class="row">
                 <div class="label">{{ r.l }}</div>
                 <div class="value">{{ r.v }}</div>
               </div>
               {% endfor %}
             </div>
+            {% endif %}
           </div>
-          {% if place_rows %}
-          <div class="place-rows">
-            {% for r in place_rows %}
+        </div>
+
+        {% if marital_status %}
+        <div class="section">
+          <div class="section-header sh-blue">{{ L.familyInfo }}</div>
+          <div class="family-info-body">
+            <div class="fi-label">{{ L.maritalStatus }}</div>
+            <div class="fi-value">{{ marital_status }}</div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if family_members %}
+        <div class="section">
+          <div class="section-header sh-blue">{{ L.familyMembers }}</div>
+          {% for m in family_members %}
+          <div class="family-member">
+            <div class="fm-relation">{{ L.get(m.relation, m.relation) }}</div>
+            {% if m.name %}<div class="fm-name">{{ m.name }}</div>{% endif %}
+            {% if m.info or m.note %}
+            <div class="fm-info">
+              {% if m.info %}{{ m.info }}{% endif %}{% if m.info and m.note %} — {% endif %}{% if m.note %}{{ m.note }}{% endif %}
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </td>
+
+      <!-- ─── Ustun 2 ─────────────────────────────── -->
+      <td>
+
+        {% if education_rows %}
+        <div class="section">
+          <div class="section-header sh-green">{{ L.education }}</div>
+          <div class="rows-section">
+            {% for r in education_rows %}
             <div class="row">
               <div class="label">{{ r.l }}</div>
               <div class="value">{{ r.v }}</div>
             </div>
             {% endfor %}
           </div>
-          {% endif %}
         </div>
-      </div>
+        {% endif %}
 
-      {% if marital_status %}
-      <div class="section">
-        <div class="section-header sh-blue">{{ L.familyInfo }}</div>
-        <div class="family-info-body">
-          <div class="fi-label">{{ L.maritalStatus }}</div>
-          <div class="fi-value">{{ marital_status }}</div>
-        </div>
-      </div>
-      {% endif %}
-
-      {% if family_members %}
-      <div class="section">
-        <div class="section-header sh-blue">{{ L.familyMembers }}</div>
-        {% for m in family_members %}
-        <div class="family-member">
-          <div class="fm-relation">{{ L.get(m.relation, m.relation) }}</div>
-          {% if m.name %}<div class="fm-name">{{ m.name }}</div>{% endif %}
-          {% if m.info or m.note %}
-          <div class="fm-info">
-            {% if m.info %}{{ m.info }}{% endif %}{% if m.info and m.note %} — {% endif %}{% if m.note %}{{ m.note }}{% endif %}
+        {% if work_rows %}
+        <div class="section">
+          <div class="section-header sh-green">{{ L.work }}</div>
+          <div class="rows-section">
+            {% for r in work_rows %}
+            <div class="row">
+              <div class="label">{{ r.l }}</div>
+              <div class="value">{{ r.v }}</div>
+            </div>
+            {% endfor %}
           </div>
-          {% endif %}
         </div>
-        {% endfor %}
-      </div>
-      {% endif %}
-    </div>
+        {% endif %}
 
-    <!-- ─── Ustun 2 ─────────────────────────────── -->
-    <div class="col">
-
-      {% if education_rows %}
-      <div class="section">
-        <div class="section-header sh-green">{{ L.education }}</div>
-        <div class="rows-section">
-          {% for r in education_rows %}
-          <div class="row">
-            <div class="label">{{ r.l }}</div>
-            <div class="value">{{ r.v }}</div>
+        {% if health_text %}
+        <div class="section" style="background: {{ health_bg }};">
+          <div class="section-header" style="background: {{ health_bg }}; border-left-color: {{ health_border }}; color: {{ health_text_color }};">
+            {{ L.health }}: {{ health_text }}
           </div>
-          {% endfor %}
         </div>
-      </div>
-      {% endif %}
+        {% endif %}
+      </td>
 
-      {% if work_rows %}
-      <div class="section">
-        <div class="section-header sh-green">{{ L.work }}</div>
-        <div class="rows-section">
-          {% for r in work_rows %}
-          <div class="row">
-            <div class="label">{{ r.l }}</div>
-            <div class="value">{{ r.v }}</div>
+      <!-- ─── Ustun 3 ─────────────────────────────── -->
+      <td>
+
+        {% if achievements %}
+        <div class="section">
+          <div class="section-header sh-green">{{ L.achievements }}</div>
+          <div class="achievements">
+            {% for a in achievements %}
+            <div class="ach-item">
+              <div class="ach-year">{{ a.year }}</div>
+              <div class="ach-spacer"></div>
+              <div class="ach-title">{{ a.title }}</div>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
-      </div>
-      {% endif %}
+        {% endif %}
 
-      {% if health_text %}
-      <div class="section" style="background: {{ health_bg }};">
-        <div class="section-header" style="background: {{ health_bg }}; border-left-color: {{ health_border }}; color: {{ health_text_color }};">
-          {{ L.health }}: {{ health_text }}
+        {% if description %}
+        <div class="section">
+          <div class="section-header sh-orange">{{ L.description }}</div>
+          <div class="free-text">{{ description }}</div>
         </div>
-      </div>
-      {% endif %}
-    </div>
+        {% endif %}
 
-    <!-- ─── Ustun 3 ─────────────────────────────── -->
-    <div class="col">
-
-      {% if achievements %}
-      <div class="section">
-        <div class="section-header sh-green">{{ L.achievements }}</div>
-        <div class="achievements">
-          {% for a in achievements %}
-          <div class="ach-item">
-            <div class="ach-year">{{ a.year }}</div>
-            <div class="ach-title">{{ a.title }}</div>
-          </div>
-          {% endfor %}
+        {% if state_events %}
+        <div class="section">
+          <div class="section-header sh-amber">{{ L.stateEvents }}</div>
+          <div class="free-text">{{ state_events }}</div>
         </div>
-      </div>
-      {% endif %}
-
-      {% if description %}
-      <div class="section">
-        <div class="section-header sh-orange">{{ L.description }}</div>
-        <div class="free-text">{{ description }}</div>
-      </div>
-      {% endif %}
-
-      {% if state_events %}
-      <div class="section">
-        <div class="section-header sh-amber">{{ L.stateEvents }}</div>
-        <div class="free-text">{{ state_events }}</div>
-      </div>
-      {% endif %}
-    </div>
-  </div>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
 
 </div>
 </body>
