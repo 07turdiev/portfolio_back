@@ -17,12 +17,39 @@ from .models import (
     Direction,
     District,
     FamilyMember,
+    InfoCard,
     Language,
     Mahalla,
     Region,
     Representative,
     RepresentativeAward,
 )
+
+
+# ── Info kartochkalar (sahifa pasti) ─────────────────────────────────────
+
+@admin.register(InfoCard)
+class InfoCardAdmin(TabbedTranslationAdmin):
+    list_display = ('order', 'title_uz_latn', 'is_active', 'icon_preview')
+    list_display_links = ('title_uz_latn',)
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('title_uz_latn', 'title_uz_cyrl', 'title_ru')
+    ordering = ('order', 'id')
+    fields = (
+        'is_active', 'order', 'icon',
+        'title_uz_latn', 'title_uz_cyrl', 'title_ru',
+        'body_uz_latn', 'body_uz_cyrl', 'body_ru',
+    )
+
+    def icon_preview(self, obj):
+        if obj.icon:
+            return format_html(
+                '<img src="{}" style="height:36px;width:36px;object-fit:contain;" />',
+                obj.icon.url,
+            )
+        return '—'
+    icon_preview.short_description = 'Ikon'
 
 
 # ── Tillar ────────────────────────────────────────────────────────────────

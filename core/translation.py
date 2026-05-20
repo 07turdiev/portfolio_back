@@ -13,6 +13,7 @@ from .models import (
     AwardType,
     Direction,
     FamilyMember,
+    InfoCard,
     Representative,
 )
 
@@ -65,3 +66,8 @@ class RepresentativeTR(TranslationOptions):
 @register(FamilyMember)
 class FamilyMemberTR(TranslationOptions):
     fields = ('name', 'info', 'note')
+
+
+@register(InfoCard)
+class InfoCardTR(TranslationOptions):
+    fields = ('title', 'body')

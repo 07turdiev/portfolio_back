@@ -14,7 +14,7 @@ django.setup()
 from fastapi import FastAPI  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 
-from .routers import awards, directions, locations, representatives  # noqa: E402
+from .routers import awards, directions, info_cards, locations, representatives  # noqa: E402
 
 app = FastAPI(
     title='Madaniyat portfolio API',
@@ -39,6 +39,7 @@ app.include_router(directions.router)
 app.include_router(awards.router)
 app.include_router(locations.router)
 app.include_router(representatives.router)
+app.include_router(info_cards.router)
 
 
 @app.get('/health', tags=['system'])

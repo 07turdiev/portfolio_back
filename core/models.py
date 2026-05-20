@@ -453,3 +453,39 @@ class RepresentativeAward(TimestampedModel):
     def __str__(self):
         y = self.year or '—'
         return f'{self.representative.full_name} — {self.award} ({y})'
+
+
+# ── Sahifa pastidagi info kartochkalari (Saylovchilar/Partiyalar uchun va h.k.) ─
+
+class InfoCard(TimestampedModel):
+    """Asosiy sahifa pastida ko'rsatiladigan info kartochkalari.
+
+    Misol: \"Siyosiy partiyalar uchun\", \"Nomzodlar uchun\" va h.k.
+    Kartochkani bosganda pop-up ochiladi va to'liq matn ko'rsatiladi.
+    """
+
+    title = models.CharField(
+        'Sarlavha', max_length=200,
+        help_text="Masalan: \"Siyosiy partiyalar uchun\""
+    )
+    icon = models.ImageField(
+        'Ikon (SVG yoki PNG)', upload_to='info_cards/icons/',
+        help_text="Tavsiya: SVG, taxminan 64x64 px"
+    )
+    body = models.TextField(
+        'Matni',
+        help_text="Pop-up oynada ko'rsatiladigan to'liq matn"
+    )
+    order = models.PositiveIntegerField(
+        'Tartib', default=0,
+        help_text="Kichik raqam birinchi ko'rinadi"
+    )
+    is_active = models.BooleanField('Faol', default=True)
+
+    class Meta:
+        verbose_name = 'Info kartochka'
+        verbose_name_plural = 'Info kartochkalar'
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.title
