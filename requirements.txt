@@ -6,3 +6,5 @@ psycopg[binary]>=3.1
 fastapi>=0.110
 uvicorn[standard]>=0.27
 asgiref>=3.7
+WeasyPrint>=60
+Jinja2>=3.1

@@ -1,7 +1,10 @@
 """Vakillar endpoint."""
+from io import BytesIO
+
 from asgiref.sync import sync_to_async
 from django.db.models import Q
 from fastapi import APIRouter, HTTPException, Query
+from fastapi.responses import StreamingResponse
 
 from core.models import Representative
 
@@ -198,3 +201,48 @@ async def get_person(pk: int):
     if data is None:
         raise HTTPException(status_code=404, detail='Vakil topilmadi')
     return data
+
+
+@router.get('/people/{pk}/pdf')
+async def get_person_pdf(
+    pk: int,
+    lang: str = Query('uz_latn', pattern='^(uz_latn|uz_cyrl|ru)$'),
+):
+    """Vakil portfoliosini PDF formatida yuklab olish.
+
+    `lang`: uz_latn | uz_cyrl | ru
+    """
+
+    @sync_to_async
+    def _generate():
+        try:
+            rep = Representative.objects.select_related(
+                'direction', 'residence_mahalla__district__region',
+            ).get(pk=pk, is_active=True)
+        except Representative.DoesNotExist:
+            return None
+
+        # PDF generator import shu yerda — agar WeasyPrint o'rnatilmagan bo'lsa,
+        # boshqa endpoint'lar ishlashda davom etadi.
+        from api.pdf_render import render_portfolio_pdf
+
+        pdf_bytes = render_portfolio_pdf(rep, lang)
+        # Fayl nomi uchun xavfsiz ism
+        safe_name = ''.join(
+            c if c.isalnum() or c in ' _-' else '_'
+            for c in rep.full_name
+        ).strip() or 'portfolio'
+        return pdf_bytes, safe_name
+
+    result = await _generate()
+    if result is None:
+        raise HTTPException(status_code=404, detail='Vakil topilmadi')
+    pdf_bytes, safe_name = result
+    return StreamingResponse(
+        BytesIO(pdf_bytes),
+        media_type='application/pdf',
+        headers={
+            'Content-Disposition': f'attachment; filename="{safe_name}.pdf"',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+        },
+    )
