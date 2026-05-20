@@ -330,6 +330,155 @@ NAMES_BY_TYPE = {
 }
 
 
+# ─── Qoraqalpog'iston Respublikasi mukofotlari ────────────────────────────
+# Manba: КР_Мамлекетлик_сыйлыклар_хаккында_24_10_2024.pdf
+# (16.12.2019 №280/XXIX, 24.10.2024 №399/LII bilan o'zgartirilgan)
+
+KARAKALPAK_TYPES = [
+    {
+        'key': 'honorary_titles', 'order': 1,
+        'uz_latn': "Qoraqalpog'iston Respublikasining faxriy unvonlari",
+        'uz_cyrl': 'Қорақалпоғистон Республикасининг фахрий унвонлари',
+        'ru': 'Почётные звания Республики Каракалпакстан',
+    },
+]
+
+KARAKALPAK_HONORARY_TITLES_NAMES = [
+    ('kk_sanat_arbob',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan san'at arbobi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган санъат арбоби»',
+     '«Заслуженный деятель искусств Республики Каракалпакстан»'),
+    ('kk_fan_arbob',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan fan arbobi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган фан арбоби»',
+     '«Заслуженный деятель науки Республики Каракалпакстан»'),
+    ('kk_xalq_artisti',
+     "«Qoraqalpog'iston Respublikasi xalq artisti»",
+     '«Қорақалпоғистон Республикаси халқ артисти»',
+     '«Народный артист Республики Каракалпакстан»'),
+    ('kk_xalq_baxshi',
+     "«Qoraqalpog'iston Respublikasi xalq baxshisi»",
+     '«Қорақалпоғистон Республикаси халқ бахшиси»',
+     '«Народный бахши Республики Каракалпакстан»'),
+    ('kk_xalq_yozuvchi',
+     "«Qoraqalpog'iston Respublikasi xalq yozuvchisi»",
+     '«Қорақалпоғистон Республикаси халқ ёзувчиси»',
+     '«Народный писатель Республики Каракалпакстан»'),
+    ('kk_xalq_shoir',
+     "«Qoraqalpog'iston Respublikasi xalq shoiri»",
+     '«Қорақалпоғистон Республикаси халқ шоири»',
+     '«Народный поэт Республики Каракалпакстан»'),
+    ('kk_xalq_rassom',
+     "«Qoraqalpog'iston Respublikasi xalq rassomi»",
+     '«Қорақалпоғистон Республикаси халқ рассоми»',
+     '«Народный художник Республики Каракалпакстан»'),
+    ('kk_xalq_oqituvchi',
+     "«Qoraqalpog'iston Respublikasi xalq o'qituvchisi»",
+     '«Қорақалпоғистон Республикаси халқ ўқитувчиси»',
+     '«Народный учитель Республики Каракалпакстан»'),
+    ('kk_xalq_jirov',
+     "«Qoraqalpog'iston Respublikasi xalq jirovi»",
+     '«Қорақалпоғистон Республикаси халқ жирови»',
+     '«Народный жырау Республики Каракалпакстан»'),
+    ('kk_madaniyat_xodim',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan madaniyat xodimi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган маданият ходими»',
+     '«Заслуженный работник культуры Республики Каракалпакстан»'),
+    ('kk_xizmat_artisti',
+     "«Qoraqalpog'iston Respublikasida xizmat ko'rsatgan artist»",
+     '«Қорақалпоғистон Республикасида хизмат кўрсатган артист»',
+     '«Заслуженный артист Республики Каракалпакстан»'),
+    ('kk_yoshlar_murabbiy',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan yoshlar murabbiysi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган ёшлар мураббийси»',
+     '«Заслуженный наставник молодёжи Республики Каракалпакстан»'),
+    ('kk_talim_xodim',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan xalq ta'limi xodimi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган халқ таълими ходими»',
+     '«Заслуженный работник народного образования Республики Каракалпакстан»'),
+    ('kk_murabbiy',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan murabbiy»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган мураббий»',
+     '«Заслуженный тренер Республики Каракалпакстан»'),
+    ('kk_sportchi',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan sportchi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган спортчи»',
+     '«Заслуженный спортсмен Республики Каракалпакстан»'),
+    ('kk_soglik_xodim',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan sog'liqni saqlash xodimi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган соғлиқни сақлаш ходими»',
+     '«Заслуженный работник здравоохранения Республики Каракалпакстан»'),
+    ('kk_jurnalist',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan jurnalist»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган журналист»',
+     '«Заслуженный журналист Республики Каракалпакстан»'),
+    ('kk_iqtisodchi',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan iqtisodchi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган иқтисодчи»',
+     '«Заслуженный экономист Республики Каракалпакстан»'),
+    ('kk_yurist',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan yurist»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган юрист»',
+     '«Заслуженный юрист Республики Каракалпакстан»'),
+    ('kk_sanoat_xodim',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan sanoat xodimi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган саноат ходими»',
+     '«Заслуженный работник промышленности Республики Каракалпакстан»'),
+    ('kk_transport_xodim',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan transport xodimi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган транспорт ходими»',
+     '«Заслуженный работник транспорта Республики Каракалпакстан»'),
+    ('kk_aloqa_xodim',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan aloqa xodimi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган алоқа ходими»',
+     '«Заслуженный работник связи Республики Каракалпакстан»'),
+    ('kk_quruvchi',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan quruvchi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган қурувчи»',
+     '«Заслуженный строитель Республики Каракалпакстан»'),
+    ('kk_memor',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan me'mor»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган меъмор»',
+     '«Заслуженный архитектор Республики Каракалпакстан»'),
+    ('kk_kommunal_xodim',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan kommunal, maishiy va savdo sohasi xodimi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган коммунал, маиший ва савдо соҳаси ходими»',
+     '«Заслуженный работник коммунально-бытового обслуживания и торговли Республики Каракалпакстан»'),
+    ('kk_qishloq_xodim',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan qishloq xo'jaligi xodimi»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган қишлоқ хўжалиги ходими»',
+     '«Заслуженный работник сельского хозяйства Республики Каракалпакстан»'),
+    ('kk_irrigator',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan irrigator»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган ирригатор»',
+     '«Заслуженный ирригатор Республики Каракалпакстан»'),
+    ('kk_paxtakor',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan paxtakor»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган пахтакор»',
+     '«Заслуженный хлопкороб Республики Каракалпакстан»'),
+    ('kk_sholikor',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan sholikor»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган шоликор»',
+     '«Заслуженный рисовод Республики Каракалпакстан»'),
+    ('kk_pillakor',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan pillakor»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган пиллакор»',
+     '«Заслуженный шелковод Республики Каракалпакстан»'),
+    ('kk_chorvador',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan chorvador»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган чорвадор»',
+     '«Заслуженный животновод Республики Каракалпакстан»'),
+    ('kk_ixtirochi',
+     "«Qoraqalpog'iston Respublikasiga xizmat ko'rsatgan ixtirochi va ratsionalizator»",
+     '«Қорақалпоғистон Республикасига хизмат кўрсатган ихтирочи ва рационализатор»',
+     '«Заслуженный изобретатель и рационализатор Республики Каракалпакстан»'),
+]
+
+KARAKALPAK_NAMES_BY_TYPE = {
+    'honorary_titles': KARAKALPAK_HONORARY_TITLES_NAMES,
+}
+
+
 class Command(BaseCommand):
     help = "Mukofot mansubliklari, turlari va nomlarini frontend bilan bir xil to'ldiradi"
 
@@ -392,9 +541,51 @@ class Command(BaseCommand):
                 self.stdout.write(f'      {mark} {uz_latn}')
                 total += 1
 
+        # ─── Qoraqalpog'iston turlari + nomlari ────────────────────────
+        self.stdout.write(self.style.MIGRATE_HEADING(
+            "\nMukofot turlari (Qoraqalpog'iston):"
+        ))
+        kk_aff = affiliations['karakalpakstan']
+        kk_types_by_key = {}
+        for tp in KARAKALPAK_TYPES:
+            obj, created = AwardType.objects.update_or_create(
+                affiliation=kk_aff, key=tp['key'],
+                defaults={
+                    'order': tp['order'],
+                    'name': tp['uz_latn'],
+                    'name_uz_latn': tp['uz_latn'],
+                    'name_uz_cyrl': tp['uz_cyrl'],
+                    'name_ru': tp['ru'],
+                },
+            )
+            kk_types_by_key[tp['key']] = obj
+            mark = '+' if created else '·'
+            self.stdout.write(f'  {mark} {tp["uz_latn"]}')
+
+        self.stdout.write(self.style.MIGRATE_HEADING(
+            "\nMukofot nomlari (Qoraqalpog'iston):"
+        ))
+        for type_key, names in KARAKALPAK_NAMES_BY_TYPE.items():
+            tp = kk_types_by_key[type_key]
+            self.stdout.write(f'  [{type_key}]')
+            for order, (key, uz_latn, uz_cyrl, ru) in enumerate(names, start=1):
+                obj, created = AwardName.objects.update_or_create(
+                    type=tp, key=key,
+                    defaults={
+                        'order': order,
+                        'name': uz_latn,
+                        'name_uz_latn': uz_latn,
+                        'name_uz_cyrl': uz_cyrl,
+                        'name_ru': ru,
+                    },
+                )
+                mark = '+' if created else '·'
+                self.stdout.write(f'      {mark} {uz_latn}')
+                total += 1
+
         self.stdout.write(
             self.style.SUCCESS(
                 f'\nTayyor: {len(AFFILIATIONS)} mansublik, '
-                f'{len(STATE_TYPES)} tur, {total} nom.'
+                f'{len(STATE_TYPES) + len(KARAKALPAK_TYPES)} tur, {total} nom.'
             )
         )
