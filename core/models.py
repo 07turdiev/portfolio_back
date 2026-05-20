@@ -9,6 +9,7 @@ Iyerarxiya:
 
     Representative (vakil) — bitta Direction, ko'p AwardName (through model bilan)
 """
+from django.core.validators import FileExtensionValidator
 from django.db import models
 
 
@@ -468,9 +469,12 @@ class InfoCard(TimestampedModel):
         'Sarlavha', max_length=200,
         help_text="Masalan: \"Siyosiy partiyalar uchun\""
     )
-    icon = models.ImageField(
-        'Ikon (SVG yoki PNG)', upload_to='info_cards/icons/',
-        help_text="Tavsiya: SVG, taxminan 64x64 px"
+    icon = models.FileField(
+        'Ikon (SVG, PNG, JPG)', upload_to='info_cards/icons/',
+        validators=[FileExtensionValidator(
+            allowed_extensions=['svg', 'png', 'jpg', 'jpeg', 'webp']
+        )],
+        help_text="SVG (tavsiya etiladi) yoki PNG. Taxminan 64x64 px"
     )
     body = models.TextField(
         'Matni',
