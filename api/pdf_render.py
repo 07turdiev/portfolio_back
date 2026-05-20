@@ -237,16 +237,17 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
   /* ─── 3-ustun: TABLE layout (WeasyPrint uchun ishonchli) */
   .grid {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 3mm 0;
+    border-collapse: collapse;
     margin-top: 3mm;
     table-layout: fixed;
   }
   .grid > tbody > tr > td {
     vertical-align: top;
     width: 33.33%;
-    padding: 0;
+    padding: 0 1.5mm;
   }
+  .grid > tbody > tr > td:first-child { padding-left: 0; }
+  .grid > tbody > tr > td:last-child  { padding-right: 0; }
 
   /* ─── Bo'lim kartochkasi ───────────────────────────────── */
   .section {
@@ -403,10 +404,13 @@ TEMPLATE_SRC = r"""<!DOCTYPE html>
   /* ─── Erkin matn (tavsifnoma, davlat tadbirlari) ────── */
   .free-text {
     padding: 2mm 3mm;
-    font-size: 7.5pt;
+    font-size: 7pt;
     color: #172b4d;
-    line-height: 1.45;
+    line-height: 1.4;
     text-align: justify;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 </style>
 </head>
