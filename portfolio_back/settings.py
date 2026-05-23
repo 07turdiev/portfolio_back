@@ -72,6 +72,13 @@ else:
             'PASSWORD': '2002',
             'HOST': '127.0.0.1',
             'PORT': '5432',
+            # Persistent connections — har thread/worker da 60 soniya ushlab turiladi
+            'CONN_MAX_AGE': 60,
+            # Django 4.1+: har request boshida `SELECT 1` bilan ulanish tirikligini
+            # tekshiradi va yopilgan bo'lsa qayta ochadi. ASGI + sync_to_async muhitida
+            # uzoq vaqt ishlayotgan workerlarda "the connection is closed" xatosini
+            # oldini oladi.
+            'CONN_HEALTH_CHECKS': True,
         }
     }
 
