@@ -38,6 +38,10 @@ DEBUG = _env_bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = _env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1')
 
+# HTTPS orqali keladigan POST/PUT so'rovlari uchun ishonchli originlar
+# Misol: CSRF_TRUSTED_ORIGINS=https://portfolio.madaniyhayot.uz
+CSRF_TRUSTED_ORIGINS = _env_list('CSRF_TRUSTED_ORIGINS', '')
+
 INSTALLED_APPS = [
     # modeltranslation va Jazzmin contrib.admin dan oldin bo'lishi shart
     'modeltranslation',
