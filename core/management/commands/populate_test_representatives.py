@@ -163,6 +163,17 @@ class Command(BaseCommand):
                 univ_uz, univ_cyr, univ_ru = data['university']
                 spec_uz, spec_cyr, spec_ru = data['specialty']
                 mahalla = random.choice(mahallas)
+                # Tug'ilgan joy uchun: 30% bir xil tuman, 50% boshqa, 20% null
+                roll = random.random()
+                if roll < 0.30:
+                    same_district_mahallas = [
+                        m for m in mahallas if m.district_id == mahalla.district_id
+                    ]
+                    birth_mahalla = random.choice(same_district_mahallas or [mahalla])
+                elif roll < 0.80:
+                    birth_mahalla = random.choice(mahallas)
+                else:
+                    birth_mahalla = None
 
                 year = random.randint(1955, 1990)
                 rep = Representative.objects.create(
@@ -182,10 +193,7 @@ class Command(BaseCommand):
                     gender=Representative.GENDER_MALE if is_male else Representative.GENDER_FEMALE,
                     nationality='ozbek',
                     birth_date=date(year, random.randint(1, 12), random.randint(1, 28)),
-                    birth_place=mahalla.district.region.name_uz_latn,
-                    birth_place_uz_latn=mahalla.district.region.name_uz_latn,
-                    birth_place_uz_cyrl=mahalla.district.region.name_uz_cyrl,
-                    birth_place_ru=mahalla.district.region.name_ru,
+                    birth_mahalla=birth_mahalla,
                     residence_mahalla=mahalla,
                     residence_place='',
                     marital_status="Oilali, 2 nafar farzandi bor",

@@ -192,21 +192,37 @@ class RepresentativeAwardInline(admin.TabularInline):
 class RepresentativeForm(forms.ModelForm):
     """Cascading region → district → mahalla dropdownlar.
 
-    region va district modelda yo'q — faqat UX uchun virtual maydonlar.
-    Saqlashda residence_mahalla ishlatiladi (district/region undan kelib chiqadi).
+    Ikki manzil bloki bor — yashash va tug'ilgan joyi. Har bir blokda
+    `*_region` va `*_district` maydonlari modelda yo'q (virtual, faqat UX
+    uchun); saqlashda mos `*_mahalla` ForeignKey ishlatiladi.
     """
 
+    # Yashash manzili (cascade)
     region = forms.ModelChoiceField(
         queryset=Region.objects.all().order_by('name_uz_latn'),
-        label="Viloyat",
+        label="Yashash viloyati",
         required=False,
         widget=forms.Select(attrs={'id': 'id_region'}),
     )
     district = forms.ModelChoiceField(
         queryset=District.objects.none(),
-        label="Tuman",
+        label="Yashash tumani",
         required=False,
         widget=forms.Select(attrs={'id': 'id_district'}),
+    )
+
+    # Tug'ilgan joyi (cascade)
+    birth_region = forms.ModelChoiceField(
+        queryset=Region.objects.all().order_by('name_uz_latn'),
+        label="Tug'ilgan viloyati",
+        required=False,
+        widget=forms.Select(attrs={'id': 'id_birth_region'}),
+    )
+    birth_district = forms.ModelChoiceField(
+        queryset=District.objects.none(),
+        label="Tug'ilgan tumani",
+        required=False,
+        widget=forms.Select(attrs={'id': 'id_birth_district'}),
     )
 
     class Meta:
@@ -214,48 +230,60 @@ class RepresentativeForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'residence_mahalla': forms.Select(attrs={'id': 'id_residence_mahalla'}),
+            'birth_mahalla': forms.Select(attrs={'id': 'id_birth_mahalla'}),
         }
+
+    def _init_cascade(self, region_field, district_field, mahalla_field,
+                      mahalla_instance):
+        """Bitta cascade (region/district/mahalla) uchun queryset/initial sozlash."""
+        self.fields[mahalla_field].queryset = Mahalla.objects.none()
+
+        if self.data.get(region_field):
+            try:
+                self.fields[district_field].queryset = District.objects.filter(
+                    region_id=self.data.get(region_field),
+                ).order_by('name_uz_latn')
+            except (ValueError, TypeError):
+                pass
+
+        if self.data.get(district_field):
+            try:
+                self.fields[mahalla_field].queryset = Mahalla.objects.filter(
+                    district_id=self.data.get(district_field),
+                ).order_by('name_uz_latn')
+            except (ValueError, TypeError):
+                pass
+
+        # Edit holati — instance da mahalla bor bo'lsa
+        if mahalla_instance is not None:
+            district = mahalla_instance.district
+            region = district.region
+            self.fields[region_field].initial = region.soato
+            self.fields[district_field].initial = district.soato
+            if not self.data:
+                self.fields[district_field].queryset = District.objects.filter(
+                    region=region,
+                ).order_by('name_uz_latn')
+                self.fields[mahalla_field].queryset = Mahalla.objects.filter(
+                    district=district,
+                ).order_by('name_uz_latn')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Mahalla querysetini boshlang'ich holatda bo'sh qilish
-        self.fields['residence_mahalla'].queryset = Mahalla.objects.none()
+        residence = (
+            self.instance.residence_mahalla
+            if self.instance and self.instance.pk and self.instance.residence_mahalla_id
+            else None
+        )
+        birth = (
+            self.instance.birth_mahalla
+            if self.instance and self.instance.pk and self.instance.birth_mahalla_id
+            else None
+        )
 
-        # POST yuborilganda — qaytadan tanlanganga qarab queryset qurish
-        if self.data.get('region'):
-            try:
-                region_id = self.data.get('region')
-                self.fields['district'].queryset = District.objects.filter(
-                    region_id=region_id
-                ).order_by('name_uz_latn')
-            except (ValueError, TypeError):
-                pass
-
-        if self.data.get('district'):
-            try:
-                district_id = self.data.get('district')
-                self.fields['residence_mahalla'].queryset = Mahalla.objects.filter(
-                    district_id=district_id
-                ).order_by('name_uz_latn')
-            except (ValueError, TypeError):
-                pass
-
-        # Edit holati — instance.residence_mahalla bor bo'lsa
-        if self.instance and self.instance.pk and self.instance.residence_mahalla_id:
-            mahalla = self.instance.residence_mahalla
-            district = mahalla.district
-            region = district.region
-            self.fields['region'].initial = region.soato
-            self.fields['district'].initial = district.soato
-            if not self.data:
-                # GET (POST emas) — querysetlarni instance asosida to'ldiramiz
-                self.fields['district'].queryset = District.objects.filter(
-                    region=region
-                ).order_by('name_uz_latn')
-                self.fields['residence_mahalla'].queryset = Mahalla.objects.filter(
-                    district=district
-                ).order_by('name_uz_latn')
+        self._init_cascade('region', 'district', 'residence_mahalla', residence)
+        self._init_cascade('birth_region', 'birth_district', 'birth_mahalla', birth)
 
 
 @admin.register(Representative)
@@ -278,7 +306,7 @@ class RepresentativeAdmin(TabbedTranslationAdmin):
     list_filter = ('direction', 'gender', 'is_active', 'nationality')
     search_fields = (
         'first_name', 'last_name', 'middle_name',
-        'position', 'birth_place', 'residence_place',
+        'position', 'residence_place',
     )
     ordering = ('last_name', 'first_name')
     list_per_page = 30
@@ -321,7 +349,17 @@ class RepresentativeAdmin(TabbedTranslationAdmin):
                 'gender',
                 'nationality',
                 'birth_date',
-                'birth_place',
+            ),
+        }),
+        ("Tug'ilgan joyi", {
+            'fields': (
+                'birth_region',
+                'birth_district',
+                'birth_mahalla',
+            ),
+        }),
+        ('Yashash manzili', {
+            'fields': (
                 'region',
                 'district',
                 'residence_mahalla',
@@ -435,7 +473,11 @@ class RepresentativeAdmin(TabbedTranslationAdmin):
         return (
             super()
             .get_queryset(request)
-            .select_related('direction', 'residence_mahalla__district__region')
+            .select_related(
+                'direction',
+                'residence_mahalla__district__region',
+                'birth_mahalla__district__region',
+            )
             .annotate(_awards_total=Count('representative_awards'))
         )
 

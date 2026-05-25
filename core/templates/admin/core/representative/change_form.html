@@ -9,57 +9,83 @@ var CASCADE_DATA = {
     mahallas: {{ mahallas_json|safe }}
 };
 
-window.addEventListener('load', function() {
-    setTimeout(function() {
+(function () {
+    function init() {
         var $ = django.jQuery;
-        var $r = $('#id_region');
-        var $d = $('#id_district');
-        var $m = $('#id_residence_mahalla');
-        if (!$r.length || !$d.length || !$m.length) return;
 
-        var savedD = $d.val();
-        var savedM = $m.val();
+        // Bitta cascade — viloyat → tuman → mahalla. Idlar bo'yicha topadi.
+        function setupCascade(regionId, districtId, mahallaId, labels) {
+            var $r = $('#' + regionId);
+            var $d = $('#' + districtId);
+            var $m = $('#' + mahallaId);
+            if (!$r.length || !$d.length || !$m.length) return;
 
-        // Select2 ni olib tashlash (oddiy native select ishlashi uchun)
-        [$r, $d, $m].forEach(function($el) {
-            if ($el.data('select2')) {
-                $el.select2('destroy');
-            }
-        });
+            var savedD = $d.val();
+            var savedM = $m.val();
 
-        function fill($sel, items, saved, ph) {
-            $sel.empty().append('<option value="">' + ph + '</option>');
-            (items || []).forEach(function(item) {
-                var sel = String(item.id) === String(saved) ? ' selected' : '';
-                $sel.append('<option value="' + item.id + '"' + sel + '>' + item.name + '</option>');
+            // Select2 ni olib tashlash (oddiy native select ishlashi uchun)
+            [$r, $d, $m].forEach(function ($el) {
+                if ($el.data('select2')) {
+                    $el.select2('destroy');
+                }
             });
-        }
 
-        $r[0].onchange = function() {
-            savedD = ''; savedM = '';
-            fill($d, CASCADE_DATA.districts[this.value] || [], '', '-- Tumanni tanlang --');
-            fill($m, [], '', '-- Avval tuman tanlang --');
-        };
-
-        $d[0].onchange = function() {
-            savedM = '';
-            fill($m, CASCADE_DATA.mahallas[this.value] || [], '', '-- Mahallani tanlang --');
-        };
-
-        // Sahifa yuklanganda: viloyat tanlangan bo'lsa, tuman/mahalla larni to'ldiramiz
-        if ($r.val()) {
-            fill($d, CASCADE_DATA.districts[$r.val()] || [], savedD, '-- Tumanni tanlang --');
-            if ($d.val()) {
-                fill($m, CASCADE_DATA.mahallas[$d.val()] || [], savedM, '-- Mahallani tanlang --');
+            function fill($sel, items, saved, ph) {
+                $sel.empty().append('<option value="">' + ph + '</option>');
+                (items || []).forEach(function (item) {
+                    var sel = String(item.id) === String(saved) ? ' selected' : '';
+                    $sel.append('<option value="' + item.id + '"' + sel + '>' + item.name + '</option>');
+                });
             }
-        } else {
-            // Hech narsa tanlanmagan
-            fill($d, [], '', '-- Avval viloyat tanlang --');
-            fill($m, [], '', '-- Avval tuman tanlang --');
+
+            $r[0].onchange = function () {
+                savedD = '';
+                savedM = '';
+                fill($d, CASCADE_DATA.districts[this.value] || [], '', labels.pickDistrict);
+                fill($m, [], '', labels.pickDistrictFirst);
+            };
+
+            $d[0].onchange = function () {
+                savedM = '';
+                fill($m, CASCADE_DATA.mahallas[this.value] || [], '', labels.pickMahalla);
+            };
+
+            // Sahifa yuklanganda — joriy holatga ko'ra dropdownlarni to'ldirish
+            if ($r.val()) {
+                fill($d, CASCADE_DATA.districts[$r.val()] || [], savedD, labels.pickDistrict);
+                if ($d.val()) {
+                    fill($m, CASCADE_DATA.mahallas[$d.val()] || [], savedM, labels.pickMahalla);
+                } else {
+                    fill($m, [], '', labels.pickDistrictFirst);
+                }
+            } else {
+                fill($d, [], '', labels.pickRegionFirst);
+                fill($m, [], '', labels.pickDistrictFirst);
+            }
         }
 
-        console.log('[CASCADE] Viloyat → Tuman → Mahalla tayyor');
-    }, 500);
-});
+        var residenceLabels = {
+            pickDistrict: '-- Yashash tumanini tanlang --',
+            pickMahalla: '-- Yashash mahallasini tanlang --',
+            pickRegionFirst: '-- Avval viloyat tanlang --',
+            pickDistrictFirst: '-- Avval tuman tanlang --',
+        };
+        var birthLabels = {
+            pickDistrict: "-- Tug'ilgan tumani --",
+            pickMahalla: "-- Tug'ilgan mahallasi --",
+            pickRegionFirst: '-- Avval viloyat tanlang --',
+            pickDistrictFirst: '-- Avval tuman tanlang --',
+        };
+
+        setupCascade('id_region', 'id_district', 'id_residence_mahalla', residenceLabels);
+        setupCascade('id_birth_region', 'id_birth_district', 'id_birth_mahalla', birthLabels);
+
+        console.log('[CASCADE] Yashash va tug\'ilgan joyi cascadelari tayyor');
+    }
+
+    window.addEventListener('load', function () {
+        setTimeout(init, 500);
+    });
+})();
 </script>
 {% endblock %}

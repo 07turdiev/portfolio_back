@@ -44,7 +44,6 @@ class RepresentativeTR(TranslationOptions):
         'last_name',
         'first_name',
         'middle_name',
-        'birth_place',
         'marital_status',
         'university',
         'specialty',

@@ -621,6 +621,21 @@ def _build_residence(rep: Representative, lang: str) -> tuple[str, str, str]:
     return region_name, district_name, ', '.join(p for p in parts if p)
 
 
+def _build_birth_place(rep: Representative, lang: str) -> str:
+    """Strukturali tug'ilgan joy: mahalla, tuman, viloyat."""
+    if not rep.birth_mahalla_id:
+        return ''
+    m = rep.birth_mahalla
+    d = m.district
+    r = d.region
+    parts = [
+        _tr(m, 'name', lang),
+        _tr(d, 'name', lang),
+        _tr(r, 'name', lang),
+    ]
+    return ', '.join(p for p in parts if p)
+
+
 def _filter_rows(rows: list[dict]) -> list[dict]:
     return [r for r in rows if r['v']]
 
@@ -638,8 +653,8 @@ def render_portfolio_pdf(rep: Representative, lang: str = 'uz_latn') -> bytes:
     direction_name = DIRECTIONS[lang].get(rep.direction.key, rep.direction.key)
     region_name, district_name, residence_full = _build_residence(rep, lang)
 
-    # Tug'ilgan joyi
-    birth_place = _tr(rep, 'birth_place', lang)
+    # Tug'ilgan joyi — strukturali (mahalla → tuman → viloyat)
+    birth_place = _build_birth_place(rep, lang)
 
     # Personal rows (filtrlangan)
     personal_rows = _filter_rows([

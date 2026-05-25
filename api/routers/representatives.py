@@ -21,7 +21,7 @@ SEARCH_FIELDS = (
     'first_name_uz_latn', 'first_name_uz_cyrl', 'first_name_ru',
     'middle_name_uz_latn', 'middle_name_uz_cyrl', 'middle_name_ru',
     'position_uz_latn', 'position_uz_cyrl', 'position_ru',
-    'birth_place_uz_latn', 'birth_place_uz_cyrl', 'birth_place_ru',
+    # Yashash joyi (mahalla → tuman → viloyat)
     'residence_mahalla__name_uz_latn',
     'residence_mahalla__name_uz_cyrl',
     'residence_mahalla__name_ru',
@@ -31,18 +31,30 @@ SEARCH_FIELDS = (
     'residence_mahalla__district__region__name_uz_latn',
     'residence_mahalla__district__region__name_uz_cyrl',
     'residence_mahalla__district__region__name_ru',
+    # Tug'ilgan joyi (mahalla → tuman → viloyat)
+    'birth_mahalla__name_uz_latn',
+    'birth_mahalla__name_uz_cyrl',
+    'birth_mahalla__name_ru',
+    'birth_mahalla__district__name_uz_latn',
+    'birth_mahalla__district__name_uz_cyrl',
+    'birth_mahalla__district__name_ru',
+    'birth_mahalla__district__region__name_uz_latn',
+    'birth_mahalla__district__region__name_uz_cyrl',
+    'birth_mahalla__district__region__name_ru',
 )
 
 
-def _residence(rep) -> dict | None:
-    """Hozirgi yashash joyi — mahalla + tuman + viloyat."""
-    if not rep.residence_mahalla_id:
+def _place(mahalla) -> dict | None:
+    """Mahalla obyekti -> {mahalla, district, region} strukturasi.
+
+    `residence` va `birth` blokari uchun umumiy. None bo'lsa null qaytaradi.
+    """
+    if mahalla is None:
         return None
-    m = rep.residence_mahalla
-    d = m.district
+    d = mahalla.district
     r = d.region
     return {
-        'mahalla': {'tin': m.tin, 'name': loc_name(m)},
+        'mahalla': {'tin': mahalla.tin, 'name': loc_name(mahalla)},
         'district': {
             'soato': d.soato,
             'slug': d.slug,
@@ -51,8 +63,23 @@ def _residence(rep) -> dict | None:
             'lng': d.lng,
         },
         'region': {'soato': r.soato, 'slug': r.slug, 'name': loc_name(r)},
-        'extra': rep.residence_place or '',
     }
+
+
+def _residence(rep) -> dict | None:
+    """Hozirgi yashash joyi — mahalla + tuman + viloyat + qo'shimcha."""
+    if not rep.residence_mahalla_id:
+        return None
+    base = _place(rep.residence_mahalla) or {}
+    base['extra'] = rep.residence_place or ''
+    return base
+
+
+def _birth(rep) -> dict | None:
+    """Tug'ilgan joy — mahalla + tuman + viloyat."""
+    if not rep.birth_mahalla_id:
+        return None
+    return _place(rep.birth_mahalla)
 
 
 def _serialize(rep: Representative) -> dict:
@@ -92,7 +119,7 @@ def _serialize(rep: Representative) -> dict:
         'nationality': rep.nationality,
         'nationalityDisplay': rep.get_nationality_display() if rep.nationality else '',
         'birthDate': rep.birth_date.isoformat() if rep.birth_date else None,
-        'birthPlace': i18n(rep, 'birth_place'),
+        'birth': _birth(rep),
         'residence': _residence(rep),
         'photo': rep.photo.url if rep.photo else None,
         # Family
@@ -132,18 +159,22 @@ def _serialize(rep: Representative) -> dict:
 async def list_people(
     direction: str | None = Query(None, description="Yo'nalish kaliti"),
     gender: str | None = Query(None, pattern='^(male|female)$'),
-    region: str | None = Query(None, description="Viloyat slug yoki SOATO"),
-    district: str | None = Query(None, description="Tuman slug yoki SOATO"),
+    region: str | None = Query(None, description='Yashash viloyati slug yoki SOATO'),
+    district: str | None = Query(None, description='Yashash tumani slug yoki SOATO'),
+    birth_region: str | None = Query(None, description="Tug'ilgan viloyati slug yoki SOATO"),
+    birth_district: str | None = Query(None, description="Tug'ilgan tumani slug yoki SOATO"),
     q: str | None = Query(None, description="Qidiruv (F.I.O., lavozim, tuman, viloyat) — 3 til"),
     skip: int = Query(0, ge=0, description='Boshlang\'ich offset (pagination)'),
     limit: int = Query(200, ge=1, le=1000, description='Maksimum natijalar soni'),
 ):
-    """Vakillar ro'yxati. Filtrlash: yo'nalish, jins, viloyat, tuman, qidiruv (q)."""
+    """Vakillar ro'yxati. Filtrlash: yo'nalish, jins, yashash/tug'ilgan viloyat va tumani, qidiruv (q)."""
 
     @sync_to_async
     def _fetch():
         qs = Representative.objects.filter(is_active=True).select_related(
-            'direction', 'residence_mahalla__district__region',
+            'direction',
+            'residence_mahalla__district__region',
+            'birth_mahalla__district__region',
         )
         if direction:
             qs = qs.filter(direction__key=direction)
@@ -158,6 +189,16 @@ async def list_people(
             qs = qs.filter(
                 Q(residence_mahalla__district__slug=district)
                 | Q(residence_mahalla__district__soato=district)
+            )
+        if birth_region:
+            qs = qs.filter(
+                Q(birth_mahalla__district__region__slug=birth_region)
+                | Q(birth_mahalla__district__region__soato=birth_region)
+            )
+        if birth_district:
+            qs = qs.filter(
+                Q(birth_mahalla__district__slug=birth_district)
+                | Q(birth_mahalla__district__soato=birth_district)
             )
         if q:
             # Token-asosli ko'p tilli qidiruv (build_search_q):
@@ -184,7 +225,9 @@ async def get_person(pk: int):
         try:
             return _serialize(
                 Representative.objects.select_related(
-                    'direction', 'residence_mahalla__district__region',
+                    'direction',
+                    'residence_mahalla__district__region',
+                    'birth_mahalla__district__region',
                 ).get(pk=pk, is_active=True)
             )
         except Representative.DoesNotExist:
@@ -210,7 +253,9 @@ async def get_person_pdf(
     def _generate():
         try:
             rep = Representative.objects.select_related(
-                'direction', 'residence_mahalla__district__region',
+                'direction',
+                'residence_mahalla__district__region',
+                'birth_mahalla__district__region',
             ).get(pk=pk, is_active=True)
         except Representative.DoesNotExist:
             return None

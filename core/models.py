@@ -270,7 +270,11 @@ class Representative(TimestampedModel):
     )
     birth_date = models.DateField("Tug'ilgan sanasi", null=True, blank=True)
 
-    birth_place = models.CharField("Tug'ilgan joyi", max_length=200, blank=True)
+    birth_mahalla = models.ForeignKey(
+        Mahalla, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='born_residents', verbose_name="Tug'ilgan joyi (mahalla)",
+        help_text="Viloyat → tuman → mahalla tanlanadi."
+    )
 
     residence_mahalla = models.ForeignKey(
         Mahalla, on_delete=models.SET_NULL, null=True, blank=True,
