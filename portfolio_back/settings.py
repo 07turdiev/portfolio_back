@@ -1,12 +1,42 @@
-"""Django sozlamalari — Portfolio backend."""
+"""Django sozlamalari — Portfolio backend.
+
+Barcha maxfiy va muhit qiymatlari `.env` faylidan o'qiladi (python-dotenv).
+Sozlamalarga ko'rsatma uchun `.env.example` ga qarang.
+"""
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Productionda environment variable orqali bering
-SECRET_KEY = 'django-insecure-change-me-in-production-d8x2k9m4p1q3v6h7'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+# .env faylini BASE_DIR dan yuklaymiz (manage.py va uvicorn ikkalasi uchun ham ishlaydi)
+load_dotenv(BASE_DIR / '.env')
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
+def _env_list(name: str, default: str = '') -> list[str]:
+    raw = os.environ.get(name, default)
+    return [item.strip() for item in raw.split(',') if item.strip()]
+
+
+# ── Asosiy ──────────────────────────────────────────────────────────────
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    raise RuntimeError(
+        "SECRET_KEY environment variable o'rnatilmagan. "
+        ".env faylini yarating yoki ENV o'zgaruvchisini qo'ying."
+    )
+
+DEBUG = _env_bool('DEBUG', default=False)
+
+ALLOWED_HOSTS = _env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1')
 
 INSTALLED_APPS = [
     # modeltranslation va Jazzmin contrib.admin dan oldin bo'lishi shart
@@ -53,9 +83,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio_back.wsgi.application'
 ASGI_APPLICATION = 'portfolio_back.asgi.application'
 
-import os
-
-if os.environ.get('USE_SQLITE') == '1':
+# ── Database ────────────────────────────────────────────────────────────
+if _env_bool('USE_SQLITE'):
     # Vaqtinchalik — eski SQLite dan dumpdata qilish uchun
     DATABASES = {
         'default': {
@@ -66,12 +95,12 @@ if os.environ.get('USE_SQLITE') == '1':
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'portfolio_db',
-            'USER': 'portfolio',
-            'PASSWORD': '2002',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
+            'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': os.environ.get('DB_NAME', 'portfolio_db'),
+            'USER': os.environ.get('DB_USER', 'portfolio'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+            'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
             # Persistent connections — har thread/worker da 60 soniya ushlab turiladi
             'CONN_MAX_AGE': 60,
             # Django 4.1+: har request boshida `SELECT 1` bilan ulanish tirikligini
@@ -81,6 +110,39 @@ else:
             'CONN_HEALTH_CHECKS': True,
         }
     }
+
+# ── Cache ───────────────────────────────────────────────────────────────
+# `CACHE_BACKEND=redis://...` bo'lsa django-redis, aks holda local-memory.
+_cache_backend = os.environ.get('CACHE_BACKEND', 'locmem')
+if _cache_backend.startswith('redis://') or _cache_backend.startswith('rediss://'):
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': _cache_backend,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            },
+            'KEY_PREFIX': 'portfolio',
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'portfolio-locmem',
+            'KEY_PREFIX': 'portfolio',
+        }
+    }
+
+# Statik endpoint'lar uchun standart TTL (sekundlarda)
+CACHE_TTL = int(os.environ.get('CACHE_TTL', '300'))
+
+# ── CORS (FastAPI tomonidan o'qiladi) ───────────────────────────────────
+CORS_ALLOWED_ORIGINS = _env_list(
+    'CORS_ALLOWED_ORIGINS',
+    'http://localhost:5173,http://localhost:5174,'
+    'http://127.0.0.1:5173,http://127.0.0.1:5174',
+)
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},

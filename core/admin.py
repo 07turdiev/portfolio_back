@@ -5,6 +5,7 @@ from datetime import date
 from django import forms
 from django.contrib import admin
 from django.db.models import CharField as DjangoCharField
+from django.db.models import Count, Q
 from django.db.models import TextField as DjangoTextField
 from django.forms import Select, Textarea, TextInput
 from django.utils.html import format_html
@@ -76,9 +77,16 @@ class DirectionAdmin(TabbedTranslationAdmin):
     ordering = ('order', 'key')
     prepopulated_fields = {'key': ('name_uz_latn',)}
 
-    @admin.display(description='Vakillar soni')
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            _active_reps=Count(
+                'representatives', filter=Q(representatives__is_active=True),
+            ),
+        )
+
+    @admin.display(description='Vakillar soni', ordering='_active_reps')
     def representatives_count(self, obj):
-        return obj.representatives.filter(is_active=True).count()
+        return obj._active_reps
 
 
 # ── Mukofotlar ────────────────────────────────────────────────────────────
@@ -102,9 +110,12 @@ class AwardAffiliationAdmin(TabbedTranslationAdmin):
     prepopulated_fields = {'key': ('name_uz_latn',)}
     inlines = [AwardTypeInline]
 
-    @admin.display(description='Turlar soni')
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(_types=Count('types'))
+
+    @admin.display(description='Turlar soni', ordering='_types')
     def types_count(self, obj):
-        return obj.types.count()
+        return obj._types
 
 
 class AwardNameInline(TranslationTabularInline):
@@ -127,9 +138,12 @@ class AwardTypeAdmin(TabbedTranslationAdmin):
     prepopulated_fields = {'key': ('name_uz_latn',)}
     inlines = [AwardNameInline]
 
-    @admin.display(description='Nomlar soni')
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(_names=Count('names'))
+
+    @admin.display(description='Nomlar soni', ordering='_names')
     def names_count(self, obj):
-        return obj.names.count()
+        return obj._names
 
 
 @admin.register(AwardName)
@@ -394,9 +408,9 @@ class RepresentativeAdmin(TabbedTranslationAdmin):
             '<span style="color:#db2777;font-weight:600">♀ Ayol</span>'
         )
 
-    @admin.display(description='Mukofotlari')
+    @admin.display(description='Mukofotlari', ordering='_awards_total')
     def awards_count_badge(self, obj):
-        n = obj.representative_awards.count()
+        n = obj._awards_total
         if not n:
             return format_html('<span style="color:#9ca3af">—</span>')
         return format_html(
@@ -422,7 +436,7 @@ class RepresentativeAdmin(TabbedTranslationAdmin):
             super()
             .get_queryset(request)
             .select_related('direction', 'residence_mahalla__district__region')
-            .prefetch_related('representative_awards')
+            .annotate(_awards_total=Count('representative_awards'))
         )
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
@@ -461,15 +475,23 @@ class RegionAdmin(admin.ModelAdmin):
     search_fields = ('name_uz_latn', 'name_uz_cyrl', 'name_ru', 'slug', 'soato')
     ordering = ('name_uz_latn',)
 
-    @admin.display(description='Tumanlar soni')
-    def districts_count(self, obj):
-        return obj.districts.count()
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            _districts=Count('districts', distinct=True),
+            _residents=Count(
+                'districts__mahallas__residents',
+                filter=Q(districts__mahallas__residents__is_active=True),
+                distinct=True,
+            ),
+        )
 
-    @admin.display(description='Vakillar soni')
+    @admin.display(description='Tumanlar soni', ordering='_districts')
+    def districts_count(self, obj):
+        return obj._districts
+
+    @admin.display(description='Vakillar soni', ordering='_residents')
     def residents_count(self, obj):
-        return Representative.objects.filter(
-            residence_mahalla__district__region=obj, is_active=True
-        ).count()
+        return obj._residents
 
 
 @admin.register(District)
@@ -482,15 +504,23 @@ class DistrictAdmin(admin.ModelAdmin):
     autocomplete_fields = ('region',)
     ordering = ('region', 'name_uz_latn')
 
-    @admin.display(description='Mahallalar soni')
-    def mahallas_count(self, obj):
-        return obj.mahallas.count()
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            _mahallas=Count('mahallas', distinct=True),
+            _residents=Count(
+                'mahallas__residents',
+                filter=Q(mahallas__residents__is_active=True),
+                distinct=True,
+            ),
+        )
 
-    @admin.display(description='Vakillar soni')
+    @admin.display(description='Mahallalar soni', ordering='_mahallas')
+    def mahallas_count(self, obj):
+        return obj._mahallas
+
+    @admin.display(description='Vakillar soni', ordering='_residents')
     def residents_count(self, obj):
-        return Representative.objects.filter(
-            residence_mahalla__district=obj, is_active=True
-        ).count()
+        return obj._residents
 
 
 @admin.register(Mahalla)
