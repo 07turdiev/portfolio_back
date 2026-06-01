@@ -242,7 +242,7 @@ async def get_person(pk: int):
 @router.get('/people/{pk}/pdf')
 async def get_person_pdf(
     pk: int,
-    lang: str = Query('uz_latn', pattern='^(uz_latn|uz_cyrl|ru)$'),
+    lang: str = Query('uz_cyrl', pattern='^(uz_latn|uz_cyrl|ru)$'),
 ):
     """Vakil portfoliosini PDF formatida yuklab olish.
 

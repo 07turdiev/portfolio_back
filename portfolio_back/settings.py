@@ -155,10 +155,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-LANGUAGE_CODE = 'uz-latn'
+LANGUAGE_CODE = 'uz-cyrl'
 LANGUAGES = [
-    ('uz-latn', "O'zbekcha (lotin)"),
     ('uz-cyrl', 'Ўзбекча (крил)'),
+    ('uz-latn', "O'zbekcha (lotin)"),
     ('ru', 'Русский'),
 ]
 TIME_ZONE = 'Asia/Tashkent'
@@ -167,9 +167,9 @@ USE_TZ = True
 
 # ── modeltranslation ─────────────────────────────────────────────────────
 # Field nomlari: name → name_uz_latn, name_uz_cyrl, name_ru
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz-latn'
-MODELTRANSLATION_LANGUAGES = ('uz-latn', 'uz-cyrl', 'ru')
-MODELTRANSLATION_FALLBACK_LANGUAGES = ('uz-latn', 'uz-cyrl', 'ru')
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz-cyrl'
+MODELTRANSLATION_LANGUAGES = ('uz-cyrl', 'uz-latn', 'ru')
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('uz-cyrl', 'uz-latn', 'ru')
 MODELTRANSLATION_AUTO_POPULATE = True
 
 STATIC_URL = '/static/'

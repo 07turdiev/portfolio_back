@@ -584,7 +584,9 @@ def _tr(obj: Any, field: str, lang: str) -> str:
     """Modeltranslation maydonidan tarjima qiymatini olish."""
     value = getattr(obj, f'{field}_{lang}', None)
     if not value:
-        # Fallback: uz_latn
+        # Fallback: uz_cyrl, then uz_latn
+        value = getattr(obj, f'{field}_uz_cyrl', None)
+    if not value:
         value = getattr(obj, f'{field}_uz_latn', None)
     return (value or '').strip()
 
@@ -642,10 +644,10 @@ def _filter_rows(rows: list[dict]) -> list[dict]:
 
 # ─── Asosiy render funksiyasi ────────────────────────────────────────────
 
-def render_portfolio_pdf(rep: Representative, lang: str = 'uz_latn') -> bytes:
+def render_portfolio_pdf(rep: Representative, lang: str = 'uz_cyrl') -> bytes:
     """Vakilning portfoliosini PDF formatida render qilish."""
     if lang not in LABELS:
-        lang = 'uz_latn'
+        lang = 'uz_cyrl'
     L = LABELS[lang]
 
     # Asosiy ma'lumotlar

@@ -12,11 +12,11 @@ def i18n(obj: Any, field: str) -> dict[str, str]:
     """Bitta tarjima maydonini 3 tilli dict ga aylantirish.
 
     Misol: i18n(rep, 'last_name') →
-        {'uz_latn': '...', 'uz_cyrl': '...', 'ru': '...'}
+        {'uz_cyrl': '...', 'uz_latn': '...', 'ru': '...'}
     """
     return {
-        'uz_latn': getattr(obj, f'{field}_uz_latn', '') or '',
         'uz_cyrl': getattr(obj, f'{field}_uz_cyrl', '') or '',
+        'uz_latn': getattr(obj, f'{field}_uz_latn', '') or '',
         'ru': getattr(obj, f'{field}_ru', '') or '',
     }
 
@@ -24,8 +24,8 @@ def i18n(obj: Any, field: str) -> dict[str, str]:
 def loc_name(obj: Any) -> dict[str, str]:
     """Hudud (Region/District/Mahalla) name ni 3 tilli dict ga aylantirish."""
     return {
-        'uz_latn': obj.name_uz_latn or '',
         'uz_cyrl': obj.name_uz_cyrl or '',
+        'uz_latn': obj.name_uz_latn or '',
         'ru': obj.name_ru or '',
     }
 
