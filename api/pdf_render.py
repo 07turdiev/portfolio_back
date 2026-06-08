@@ -8,7 +8,7 @@ from django.conf import settings
 from jinja2 import Template
 
 from core.models import Representative
-from core.translit import cyr_to_lat
+from core.translit import cyr_to_lat, lat_to_cyr
 
 
 # ─── UI labellar (3 til) ─────────────────────────────────────────────────
@@ -593,19 +593,24 @@ def _tr(obj: Any, field: str, lang: str) -> str:
         return value.strip()
 
     cyrl = getattr(obj, f'{field}_uz_cyrl', None)
+    latn = getattr(obj, f'{field}_uz_latn', None)
     if lang == 'uz_latn' and cyrl:
         return cyr_to_lat(cyrl).strip()
+    if lang == 'uz_cyrl' and latn:
+        return lat_to_cyr(latn).strip()
 
     # Fallback: uz_cyrl, keyin uz_latn
-    value = cyrl or getattr(obj, f'{field}_uz_latn', None)
+    value = cyrl or latn
     return (value or '').strip()
 
 
 def _foreign(text: str, lang: str) -> str:
-    """Chet el (qo'lda kiritilgan) joy matni — lotin rejimida kirilldan translit."""
+    """Chet el (qo'lda kiritilgan) joy matni — joriy yozuvga transliteratsiya."""
     text = (text or '').strip()
     if lang == 'uz_latn':
         return cyr_to_lat(text)
+    if lang == 'uz_cyrl':
+        return lat_to_cyr(text)
     return text
 
 
