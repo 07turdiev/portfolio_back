@@ -8,6 +8,7 @@ from django.conf import settings
 from jinja2 import Template
 
 from core.models import Representative
+from core.translit import cyr_to_lat
 
 
 # ─── UI labellar (3 til) ─────────────────────────────────────────────────
@@ -581,14 +582,31 @@ _TEMPLATE = Template(TEMPLATE_SRC)
 # ─── Yordamchi funksiyalar ───────────────────────────────────────────────
 
 def _tr(obj: Any, field: str, lang: str) -> str:
-    """Modeltranslation maydonidan tarjima qiymatini olish."""
+    """Modeltranslation maydonidan tarjima qiymatini olish.
+
+    Productionda ma'lumotlar faqat kirillda kiritilmoqda — shu sababli lotin
+    so'ralganda mos `uz_latn` maydoni bo'sh bo'lsa, `uz_cyrl` dan avtomatik
+    transliteratsiya qilamiz (Cyrillic → Latin).
+    """
     value = getattr(obj, f'{field}_{lang}', None)
-    if not value:
-        # Fallback: uz_cyrl, then uz_latn
-        value = getattr(obj, f'{field}_uz_cyrl', None)
-    if not value:
-        value = getattr(obj, f'{field}_uz_latn', None)
+    if value:
+        return value.strip()
+
+    cyrl = getattr(obj, f'{field}_uz_cyrl', None)
+    if lang == 'uz_latn' and cyrl:
+        return cyr_to_lat(cyrl).strip()
+
+    # Fallback: uz_cyrl, keyin uz_latn
+    value = cyrl or getattr(obj, f'{field}_uz_latn', None)
     return (value or '').strip()
+
+
+def _foreign(text: str, lang: str) -> str:
+    """Chet el (qo'lda kiritilgan) joy matni — lotin rejimida kirilldan translit."""
+    text = (text or '').strip()
+    if lang == 'uz_latn':
+        return cyr_to_lat(text)
+    return text
 
 
 def _format_date(d) -> str:
@@ -619,7 +637,7 @@ def _build_residence(rep: Representative, lang: str) -> tuple[str, str, str]:
             parts.append(extra)
         return region_name, district_name, ', '.join(p for p in parts if p)
     # Chet el — qo'lda kiritilgan joy
-    foreign = (rep.residence_place_foreign or '').strip()
+    foreign = _foreign(rep.residence_place_foreign, lang)
     if foreign:
         parts = [foreign]
         if extra:
@@ -638,7 +656,7 @@ def _build_birth_place(rep: Representative, lang: str) -> str:
             _tr(r, 'name', lang),
         ]
         return ', '.join(p for p in parts if p)
-    return (rep.birth_place_foreign or '').strip()
+    return _foreign(rep.birth_place_foreign, lang)
 
 
 def _filter_rows(rows: list[dict]) -> list[dict]:
