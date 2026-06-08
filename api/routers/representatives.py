@@ -21,40 +21,36 @@ SEARCH_FIELDS = (
     'first_name_uz_latn', 'first_name_uz_cyrl', 'first_name_ru',
     'middle_name_uz_latn', 'middle_name_uz_cyrl', 'middle_name_ru',
     'position_uz_latn', 'position_uz_cyrl', 'position_ru',
-    # Yashash joyi (mahalla → tuman → viloyat)
-    'residence_mahalla__name_uz_latn',
-    'residence_mahalla__name_uz_cyrl',
-    'residence_mahalla__name_ru',
-    'residence_mahalla__district__name_uz_latn',
-    'residence_mahalla__district__name_uz_cyrl',
-    'residence_mahalla__district__name_ru',
-    'residence_mahalla__district__region__name_uz_latn',
-    'residence_mahalla__district__region__name_uz_cyrl',
-    'residence_mahalla__district__region__name_ru',
-    # Tug'ilgan joyi (mahalla → tuman → viloyat)
-    'birth_mahalla__name_uz_latn',
-    'birth_mahalla__name_uz_cyrl',
-    'birth_mahalla__name_ru',
-    'birth_mahalla__district__name_uz_latn',
-    'birth_mahalla__district__name_uz_cyrl',
-    'birth_mahalla__district__name_ru',
-    'birth_mahalla__district__region__name_uz_latn',
-    'birth_mahalla__district__region__name_uz_cyrl',
-    'birth_mahalla__district__region__name_ru',
+    # Chet eldagi (qo'lda kiritilgan) joylar
+    'residence_place_foreign',
+    'birth_place_foreign',
+    # Yashash joyi (tuman → viloyat)
+    'residence_district__name_uz_latn',
+    'residence_district__name_uz_cyrl',
+    'residence_district__name_ru',
+    'residence_district__region__name_uz_latn',
+    'residence_district__region__name_uz_cyrl',
+    'residence_district__region__name_ru',
+    # Tug'ilgan joyi (tuman → viloyat)
+    'birth_district__name_uz_latn',
+    'birth_district__name_uz_cyrl',
+    'birth_district__name_ru',
+    'birth_district__region__name_uz_latn',
+    'birth_district__region__name_uz_cyrl',
+    'birth_district__region__name_ru',
 )
 
 
-def _place(mahalla) -> dict | None:
-    """Mahalla obyekti -> {mahalla, district, region} strukturasi.
+def _place(district) -> dict | None:
+    """District obyekti -> {district, region} strukturasi.
 
     `residence` va `birth` blokari uchun umumiy. None bo'lsa null qaytaradi.
     """
-    if mahalla is None:
+    if district is None:
         return None
-    d = mahalla.district
+    d = district
     r = d.region
     return {
-        'mahalla': {'tin': mahalla.tin, 'name': loc_name(mahalla)},
         'district': {
             'soato': d.soato,
             'slug': d.slug,
@@ -67,19 +63,23 @@ def _place(mahalla) -> dict | None:
 
 
 def _residence(rep) -> dict | None:
-    """Hozirgi yashash joyi — mahalla + tuman + viloyat + qo'shimcha."""
-    if not rep.residence_mahalla_id:
-        return None
-    base = _place(rep.residence_mahalla) or {}
-    base['extra'] = rep.residence_place or ''
-    return base
+    """Hozirgi yashash joyi — tuman + viloyat, yoki chet el (qo'lda kiritilgan)."""
+    if rep.residence_district_id:
+        base = _place(rep.residence_district) or {}
+        base['extra'] = rep.residence_place or ''
+        return base
+    if rep.residence_place_foreign:
+        return {'foreign': rep.residence_place_foreign, 'extra': rep.residence_place or ''}
+    return None
 
 
 def _birth(rep) -> dict | None:
-    """Tug'ilgan joy — mahalla + tuman + viloyat."""
-    if not rep.birth_mahalla_id:
-        return None
-    return _place(rep.birth_mahalla)
+    """Tug'ilgan joy — tuman + viloyat, yoki chet el (qo'lda kiritilgan)."""
+    if rep.birth_district_id:
+        return _place(rep.birth_district)
+    if rep.birth_place_foreign:
+        return {'foreign': rep.birth_place_foreign}
+    return None
 
 
 def _serialize(rep: Representative) -> dict:
@@ -173,8 +173,8 @@ async def list_people(
     def _fetch():
         qs = Representative.objects.filter(is_active=True).select_related(
             'direction',
-            'residence_mahalla__district__region',
-            'birth_mahalla__district__region',
+            'residence_district__region',
+            'birth_district__region',
         )
         if direction:
             qs = qs.filter(direction__key=direction)
@@ -182,23 +182,23 @@ async def list_people(
             qs = qs.filter(gender=gender)
         if region:
             qs = qs.filter(
-                Q(residence_mahalla__district__region__slug=region)
-                | Q(residence_mahalla__district__region__soato=region)
+                Q(residence_district__region__slug=region)
+                | Q(residence_district__region__soato=region)
             )
         if district:
             qs = qs.filter(
-                Q(residence_mahalla__district__slug=district)
-                | Q(residence_mahalla__district__soato=district)
+                Q(residence_district__slug=district)
+                | Q(residence_district__soato=district)
             )
         if birth_region:
             qs = qs.filter(
-                Q(birth_mahalla__district__region__slug=birth_region)
-                | Q(birth_mahalla__district__region__soato=birth_region)
+                Q(birth_district__region__slug=birth_region)
+                | Q(birth_district__region__soato=birth_region)
             )
         if birth_district:
             qs = qs.filter(
-                Q(birth_mahalla__district__slug=birth_district)
-                | Q(birth_mahalla__district__soato=birth_district)
+                Q(birth_district__slug=birth_district)
+                | Q(birth_district__soato=birth_district)
             )
         if q:
             # Token-asosli ko'p tilli qidiruv (build_search_q):
@@ -226,8 +226,8 @@ async def get_person(pk: int):
             return _serialize(
                 Representative.objects.select_related(
                     'direction',
-                    'residence_mahalla__district__region',
-                    'birth_mahalla__district__region',
+                    'residence_district__region',
+                    'birth_district__region',
                 ).get(pk=pk, is_active=True)
             )
         except Representative.DoesNotExist:
@@ -254,8 +254,8 @@ async def get_person_pdf(
         try:
             rep = Representative.objects.select_related(
                 'direction',
-                'residence_mahalla__district__region',
-                'birth_mahalla__district__region',
+                'residence_district__region',
+                'birth_district__region',
             ).get(pk=pk, is_active=True)
         except Representative.DoesNotExist:
             return None

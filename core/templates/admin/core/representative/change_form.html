@@ -5,26 +5,23 @@
 
 <script>
 var CASCADE_DATA = {
-    districts: {{ districts_json|safe }},
-    mahallas: {{ mahallas_json|safe }}
+    districts: {{ districts_json|safe }}
 };
 
 (function () {
     function init() {
         var $ = django.jQuery;
 
-        // Bitta cascade — viloyat → tuman → mahalla. Idlar bo'yicha topadi.
-        function setupCascade(regionId, districtId, mahallaId, labels) {
+        // Bitta cascade — viloyat → tuman. Idlar bo'yicha topadi.
+        function setupCascade(regionId, districtId, labels) {
             var $r = $('#' + regionId);
             var $d = $('#' + districtId);
-            var $m = $('#' + mahallaId);
-            if (!$r.length || !$d.length || !$m.length) return;
+            if (!$r.length || !$d.length) return;
 
             var savedD = $d.val();
-            var savedM = $m.val();
 
             // Select2 ni olib tashlash (oddiy native select ishlashi uchun)
-            [$r, $d, $m].forEach(function ($el) {
+            [$r, $d].forEach(function ($el) {
                 if ($el.data('select2')) {
                     $el.select2('destroy');
                 }
@@ -40,45 +37,28 @@ var CASCADE_DATA = {
 
             $r[0].onchange = function () {
                 savedD = '';
-                savedM = '';
                 fill($d, CASCADE_DATA.districts[this.value] || [], '', labels.pickDistrict);
-                fill($m, [], '', labels.pickDistrictFirst);
             };
 
-            $d[0].onchange = function () {
-                savedM = '';
-                fill($m, CASCADE_DATA.mahallas[this.value] || [], '', labels.pickMahalla);
-            };
-
-            // Sahifa yuklanganda — joriy holatga ko'ra dropdownlarni to'ldirish
+            // Sahifa yuklanganda — joriy holatga ko'ra dropdownni to'ldirish
             if ($r.val()) {
                 fill($d, CASCADE_DATA.districts[$r.val()] || [], savedD, labels.pickDistrict);
-                if ($d.val()) {
-                    fill($m, CASCADE_DATA.mahallas[$d.val()] || [], savedM, labels.pickMahalla);
-                } else {
-                    fill($m, [], '', labels.pickDistrictFirst);
-                }
             } else {
                 fill($d, [], '', labels.pickRegionFirst);
-                fill($m, [], '', labels.pickDistrictFirst);
             }
         }
 
         var residenceLabels = {
             pickDistrict: '-- Yashash tumanini tanlang --',
-            pickMahalla: '-- Yashash mahallasini tanlang --',
             pickRegionFirst: '-- Avval viloyat tanlang --',
-            pickDistrictFirst: '-- Avval tuman tanlang --',
         };
         var birthLabels = {
             pickDistrict: "-- Tug'ilgan tumani --",
-            pickMahalla: "-- Tug'ilgan mahallasi --",
             pickRegionFirst: '-- Avval viloyat tanlang --',
-            pickDistrictFirst: '-- Avval tuman tanlang --',
         };
 
-        setupCascade('id_region', 'id_district', 'id_residence_mahalla', residenceLabels);
-        setupCascade('id_birth_region', 'id_birth_district', 'id_birth_mahalla', birthLabels);
+        setupCascade('id_region', 'id_residence_district', residenceLabels);
+        setupCascade('id_birth_region', 'id_birth_district', birthLabels);
 
         console.log('[CASCADE] Yashash va tug\'ilgan joyi cascadelari tayyor');
     }

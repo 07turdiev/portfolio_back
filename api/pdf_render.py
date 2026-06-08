@@ -608,34 +608,37 @@ def _build_full_name(rep: Representative, lang: str) -> str:
 
 def _build_residence(rep: Representative, lang: str) -> tuple[str, str, str]:
     """(region_name, district_name, residence_full)."""
-    if not rep.residence_mahalla_id:
-        return '', '', ''
-    m = rep.residence_mahalla
-    d = m.district
-    r = d.region
-    region_name = _tr(r, 'name', lang)
-    district_name = _tr(d, 'name', lang)
-    mahalla_name = _tr(m, 'name', lang)
-    parts = [mahalla_name, district_name, region_name]
     extra = (rep.residence_place or '').strip()
-    if extra:
-        parts.append(extra)
-    return region_name, district_name, ', '.join(p for p in parts if p)
+    if rep.residence_district_id:
+        d = rep.residence_district
+        r = d.region
+        region_name = _tr(r, 'name', lang)
+        district_name = _tr(d, 'name', lang)
+        parts = [district_name, region_name]
+        if extra:
+            parts.append(extra)
+        return region_name, district_name, ', '.join(p for p in parts if p)
+    # Chet el — qo'lda kiritilgan joy
+    foreign = (rep.residence_place_foreign or '').strip()
+    if foreign:
+        parts = [foreign]
+        if extra:
+            parts.append(extra)
+        return '', '', ', '.join(parts)
+    return '', '', ''
 
 
 def _build_birth_place(rep: Representative, lang: str) -> str:
-    """Strukturali tug'ilgan joy: mahalla, tuman, viloyat."""
-    if not rep.birth_mahalla_id:
-        return ''
-    m = rep.birth_mahalla
-    d = m.district
-    r = d.region
-    parts = [
-        _tr(m, 'name', lang),
-        _tr(d, 'name', lang),
-        _tr(r, 'name', lang),
-    ]
-    return ', '.join(p for p in parts if p)
+    """Strukturali tug'ilgan joy: tuman, viloyat (yoki chet el)."""
+    if rep.birth_district_id:
+        d = rep.birth_district
+        r = d.region
+        parts = [
+            _tr(d, 'name', lang),
+            _tr(r, 'name', lang),
+        ]
+        return ', '.join(p for p in parts if p)
+    return (rep.birth_place_foreign or '').strip()
 
 
 def _filter_rows(rows: list[dict]) -> list[dict]:

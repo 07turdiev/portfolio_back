@@ -13,9 +13,9 @@ from django.db import transaction
 from core.models import (
     AwardName,
     Direction,
+    District,
     FamilyMember,
     Language,
-    Mahalla,
     Representative,
     RepresentativeAward,
 )
@@ -139,8 +139,8 @@ class Command(BaseCommand):
             self.stderr.write("Avval populate_directions ishga tushiring")
             return
 
-        mahallas = list(Mahalla.objects.select_related('district__region').all()[:500])
-        if not mahallas:
+        districts = list(District.objects.select_related('region').all()[:500])
+        if not districts:
             self.stderr.write("Avval populate_locations ishga tushiring")
             return
 
@@ -162,18 +162,15 @@ class Command(BaseCommand):
                 position_uz, position_cyr, position_ru = data['positions'][i % len(data['positions'])]
                 univ_uz, univ_cyr, univ_ru = data['university']
                 spec_uz, spec_cyr, spec_ru = data['specialty']
-                mahalla = random.choice(mahallas)
+                district = random.choice(districts)
                 # Tug'ilgan joy uchun: 30% bir xil tuman, 50% boshqa, 20% null
                 roll = random.random()
                 if roll < 0.30:
-                    same_district_mahallas = [
-                        m for m in mahallas if m.district_id == mahalla.district_id
-                    ]
-                    birth_mahalla = random.choice(same_district_mahallas or [mahalla])
+                    birth_district = district
                 elif roll < 0.80:
-                    birth_mahalla = random.choice(mahallas)
+                    birth_district = random.choice(districts)
                 else:
-                    birth_mahalla = None
+                    birth_district = None
 
                 year = random.randint(1955, 1990)
                 rep = Representative.objects.create(
@@ -193,8 +190,8 @@ class Command(BaseCommand):
                     gender=Representative.GENDER_MALE if is_male else Representative.GENDER_FEMALE,
                     nationality='ozbek',
                     birth_date=date(year, random.randint(1, 12), random.randint(1, 28)),
-                    birth_mahalla=birth_mahalla,
-                    residence_mahalla=mahalla,
+                    birth_district=birth_district,
+                    residence_district=district,
                     residence_place='',
                     marital_status="Oilali, 2 nafar farzandi bor",
                     marital_status_uz_latn="Oilali, 2 nafar farzandi bor",
@@ -286,10 +283,10 @@ class Command(BaseCommand):
                     name_uz_latn=f'{last_uz}ev Botir Karimovich',
                     name_uz_cyrl=f'{last_cyr}ев Ботир Каримович',
                     name_ru=f'{last_ru}ев Ботир Каримович',
-                    info=f'{year - 28} yil, {mahalla.district.region.name_uz_latn}',
-                    info_uz_latn=f'{year - 28} yil, {mahalla.district.region.name_uz_latn}',
-                    info_uz_cyrl=f'{year - 28} йил, {mahalla.district.region.name_uz_cyrl}',
-                    info_ru=f'{year - 28} г., {mahalla.district.region.name_ru}',
+                    info=f'{year - 28} yil, {district.region.name_uz_latn}',
+                    info_uz_latn=f'{year - 28} yil, {district.region.name_uz_latn}',
+                    info_uz_cyrl=f'{year - 28} йил, {district.region.name_uz_cyrl}',
+                    info_ru=f'{year - 28} г., {district.region.name_ru}',
                     note='Nafaqada',
                     note_uz_latn='Nafaqada',
                     note_uz_cyrl='Нафақада',

@@ -270,20 +270,31 @@ class Representative(TimestampedModel):
     )
     birth_date = models.DateField("Tug'ilgan sanasi", null=True, blank=True)
 
-    birth_mahalla = models.ForeignKey(
-        Mahalla, on_delete=models.SET_NULL, null=True, blank=True,
-        related_name='born_residents', verbose_name="Tug'ilgan joyi (mahalla)",
-        help_text="Viloyat → tuman → mahalla tanlanadi."
+    birth_district = models.ForeignKey(
+        District, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='born_residents', verbose_name="Tug'ilgan joyi (tuman)",
+        help_text="O'zbekistondan tug'ilgan bo'lsa: viloyat → tuman tanlanadi."
+    )
+    birth_place_foreign = models.CharField(
+        "Tug'ilgan joyi (O'zbekistondan tashqarida)", max_length=300, blank=True,
+        help_text="Chet elda tug'ilgan bo'lsa, shu yerga qo'lda yozing "
+                  "(masalan: \"Moskva, Rossiya\"). Viloyat/tuman tanlamang."
     )
 
-    residence_mahalla = models.ForeignKey(
-        Mahalla, on_delete=models.SET_NULL, null=True, blank=True,
-        related_name='residents', verbose_name='Hozirgi yashash joyi (mahalla)',
-        help_text='Viloyat → tuman → mahalla tanlanadi. Xaritada marker shu tumanga qo\'yiladi.'
+    residence_district = models.ForeignKey(
+        District, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='residents', verbose_name='Hozirgi yashash joyi (tuman)',
+        help_text="O'zbekistonda yashasa: viloyat → tuman tanlanadi. "
+                  "Xaritada marker shu tumanga qo'yiladi."
+    )
+    residence_place_foreign = models.CharField(
+        "Yashash joyi (O'zbekistondan tashqarida)", max_length=300, blank=True,
+        help_text="Chet elda yashasa, shu yerga qo'lda yozing "
+                  "(masalan: \"Berlin, Germaniya\"). Viloyat/tuman tanlamang."
     )
     residence_place = models.CharField(
         "Yashash manzili (qo'shimcha)", max_length=200, blank=True,
-        help_text="Mahalladan tashqari aniqlashtirish: ko'cha, uy raqami"
+        help_text="Tumandan tashqari aniqlashtirish: mahalla, ko'cha, uy raqami"
     )
 
     photo = models.ImageField(
